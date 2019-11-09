@@ -1,23 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ProgrammaticallyCreatedDemoActivity">
-
-    <View
-        android:id="@+id/color"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    android:layout_height="match_parent">
 
     <github.com.st235.lib_expandablebottombar.ExpandableBottomBar
         android:id="@+id/expandable_bottom_bar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:items="@menu/bottom_bar"
+        android:layout_margin="20dp"
+        app:backgroundCornerRadius="25dp"
+        app:backgroundColor="#2e2e2e"
+        app:itemInactiveBackgroundColor="#fff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+    <menu xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
+        <item
+            android:id="@+id/home"
+            android:title="@string/text"
+            app:color="#FF8888"
+            app:icon="@drawable/ic_home" />
+
+        <item
+            android:id="@+id/settings"
+            android:title="@string/text4"
+            app:color="@color/colorSettings"
+            app:icon="@drawable/ic_settings" />
+
+        <item
+            android:id="@+id/bookmarks"
+            android:title="@string/text3"
+            app:color="#fa2"
+            app:icon="@drawable/ic_bookmarks" />
+    </menu>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
