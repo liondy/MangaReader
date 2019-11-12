@@ -32,8 +32,8 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_centerVertical="true"
-                android:src="@android:drawable"
-                android:tint="@color/colorItemDefaultTint" />
+                android:src="@drawable/home_icons"
+                android:tint="@color/colorBlack" />
 
             <TextView
                 android:id="@+id/item_title"
@@ -45,9 +45,9 @@
                 android:ellipsize="end"
                 android:lines="1"
                 android:paddingEnd="5dp"
-                android:text="Bookmark"
-                android:textColor="@color/colorItemDefaultTint"
-                android:textSize="15dp"
+                android:text="@string/bookmark_text"
+                android:textColor="@color/colorBlack"
+                android:textSize="15sp"
                 android:visibility="gone"
                 tools:ignore="RtlSymmetry" />
 

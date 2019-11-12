@@ -13,7 +13,6 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:textColor="@color/colorBlue"
-        android:textColorHighlight="@color/colorPrimaryDark"
         android:textStyle="bold"/>
 
 </RelativeLayout>
