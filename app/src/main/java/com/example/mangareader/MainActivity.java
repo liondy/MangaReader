@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 
 
-public class MainActivity extends AppCompatActivity implements FragmentListener {
+public class MainActivity extends AppCompatActivity implements FragmentListener, ItemSelector {
 
     private FragmentManager fragmentManager;
     private SplashScreen splashScreen;
@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
         setContentView(R.layout.activity_main);
         MainPresenter presenter = new MainPresenter(this);
         this.splashScreen = SplashScreen.createSplashScreen(this);
-        this.homeScreen = HomeScreen.createHomeScreen();
+        this.homeScreen = HomeScreen.createHomeScreen(this,this);
         this.fragmentManager=this.getSupportFragmentManager();
         this.showPage(FragmentListener.SPLASH_SCREEN);
     }
@@ -50,5 +50,10 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
             }
         }
         ft.commit();
+    }
+
+    @Override
+    public void itemSelect(int selectedID) {
+
     }
 }
