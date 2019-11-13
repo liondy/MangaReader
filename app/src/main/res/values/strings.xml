@@ -2,4 +2,7 @@
     <string name="app_name">MangaReader</string>
     <string name="manga_reader">MANGA READER</string>
     <string name="bookmark_text">Bookmark</string>
+    <string name="item_0">Home</string>
+    <string name="item_1">Bookmarks</string>
+    <string name="item_2">Likes</string>
 </resources>

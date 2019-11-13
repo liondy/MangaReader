@@ -8,4 +8,9 @@
     <color name="colorx">#FF8888</color>
     <color name="colorDivider">#E6E6E6</color>
     <color name="colorBlack">#000000</color>
+    <color name="colorYellow">#F7D7EF</color>
+    <color name="colorLightYeloow">#FBEFD3</color>
+    <color name="colorItem1Tint">#B73892</color>
+    <color name="colorItem2Tint">#EDA600</color>
+    <color name="colorItem3Tint">#1092AA</color>
 </resources>
