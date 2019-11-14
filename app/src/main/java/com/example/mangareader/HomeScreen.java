@@ -45,7 +45,7 @@ public class HomeScreen extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.home_screen,container,false);
         this.listManga = (ListView) view.findViewById(R.id.listManga);
-
+        
         return view;
     }
 
@@ -71,9 +71,9 @@ public class HomeScreen extends Fragment {
                                 mangaList.add(manga);
                             }
 
-                            ListViewAdapter adapter = new ListViewAdapter(playerItemList, getApplicationContext());
+                            ListViewAdapter adapter = new ListViewAdapter(mangaList, context);
 
-                            listView.setAdapter(adapter);
+                            listManga.setAdapter(adapter);
 
                         } catch (JSONException e) {
                             e.printStackTrace();

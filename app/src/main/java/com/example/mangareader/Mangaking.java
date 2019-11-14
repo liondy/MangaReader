@@ -75,7 +75,7 @@ public class Mangaking extends Fragment implements ItemSelector {
                     ft.show(this.homeScreen);
                 }
                 else{
-                    ft.add(R.id.fragment_container,this.homeScreen);
+                    ft.add(R.id.mangaking,this.homeScreen);
                 }
                 break;
             case ItemSelector.BOOKMARKS:

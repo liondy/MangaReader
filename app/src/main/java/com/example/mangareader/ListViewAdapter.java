@@ -1,5 +1,6 @@
 package com.example.mangareader;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,12 +32,10 @@ public class ListViewAdapter extends ArrayAdapter<Manga> {
 
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        View listViewItem = inflater.inflate(R.layout.home_screen, null, true);
+        @SuppressLint("ViewHolder") View listViewItem = inflater.inflate(R.layout.home_screen, null, true);
 
         TextView textViewNo = listViewItem.findViewById(R.id.textViewNo);
         TextView textViewName = listViewItem.findViewById(R.id.textViewName);
-        TextView textViewPosition = listViewItem.findViewById(R.id.textViewPosition);
-        TextView textViewBirth_date = listViewItem.findViewById(R.id.textViewBirthDate);
         ImageView imgVIew = listViewItem.findViewById(R.id.Poster);
 
 
