@@ -28,7 +28,7 @@ public class Mangaking extends Fragment implements ItemSelector {
 
     @SuppressLint("ResourceType")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.home_screen,container,false);
+        View view = inflater.inflate(R.layout.mangaking,container,false);
         this.customBottomBar = new CustomBottomBar(this.context,view.findViewById(R.id.customBottomBar),this);
         this.initItems();
         this.customBottomBar.changeBackground(getString(R.color.colorWhite));
