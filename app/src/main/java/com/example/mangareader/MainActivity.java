@@ -7,11 +7,11 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 
 
-public class MainActivity extends AppCompatActivity implements FragmentListener, ItemSelector {
+public class MainActivity extends AppCompatActivity implements FragmentListener {
 
     private FragmentManager fragmentManager;
     private SplashScreen splashScreen;
-    private HomeScreen homeScreen;
+    private Mangaking mangaking;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity implements FragmentListener,
         setContentView(R.layout.activity_main);
         MainPresenter presenter = new MainPresenter(this);
         this.splashScreen = SplashScreen.createSplashScreen(this);
-        this.homeScreen = HomeScreen.createHomeScreen(this,this);
+        this.mangaking = Mangaking.createMangaApp(this);
         this.fragmentManager=this.getSupportFragmentManager();
         this.showPage(FragmentListener.SPLASH_SCREEN);
     }
@@ -34,26 +34,21 @@ public class MainActivity extends AppCompatActivity implements FragmentListener,
             else{
                 ft.add(R.id.fragment_container,this.splashScreen);
             }
-            if(this.homeScreen.isAdded()){
-                ft.hide(this.homeScreen);
+            if(this.mangaking.isAdded()){
+                ft.hide(this.mangaking);
             }
         }
         else if(page==FragmentListener.HOME_SCREEN){
-            if(this.homeScreen.isAdded()){
-                ft.show(this.homeScreen);
+            if(this.mangaking.isAdded()){
+                ft.show(this.mangaking);
             }
             else{
-                ft.add(R.id.fragment_container,this.homeScreen);
+                ft.add(R.id.fragment_container,this.mangaking);
             }
             if(this.splashScreen.isAdded()){
                 ft.hide(this.splashScreen);
             }
         }
         ft.commit();
-    }
-
-    @Override
-    public void itemSelect(int selectedID) {
-
     }
 }

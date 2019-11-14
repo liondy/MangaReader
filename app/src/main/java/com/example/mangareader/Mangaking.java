@@ -9,29 +9,27 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
-public class HomeScreen extends Fragment {
-    private static HomeScreen home_screen;
+public class Mangaking extends Fragment implements ItemSelector {
+    private static Mangaking mangaking;
     private CustomBottomBar customBottomBar;
-    private ItemSelector itemSelectorInterface;
     private Context context;
 
-    public HomeScreen(){
+    public Mangaking(){
         //require empty public constructor
     }
 
-    public static HomeScreen createHomeScreen(Context context, ItemSelector itemSelector){
-        if(home_screen==null){
-            home_screen = new HomeScreen();
-            home_screen.context = context;
-            home_screen.itemSelectorInterface = itemSelector;
+    public static Mangaking createMangaApp(Context context){
+        if(mangaking==null){
+            mangaking = new Mangaking();
+            mangaking.context = context;
         }
-        return home_screen;
+        return mangaking;
     }
 
     @SuppressLint("ResourceType")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.home_screen,container,false);
-        this.customBottomBar = new CustomBottomBar(this.context,view.findViewById(R.id.customBottomBar),this.itemSelectorInterface);
+        this.customBottomBar = new CustomBottomBar(this.context,view.findViewById(R.id.customBottomBar),this);
         this.initItems();
         this.customBottomBar.changeBackground(getString(R.color.colorWhite));
         this.customBottomBar.setDefaultBackground(getString(R.color.colorWhite));
@@ -51,5 +49,10 @@ public class HomeScreen extends Fragment {
         this.customBottomBar.addItem(home);
         this.customBottomBar.addItem(bookmarks);
         this.customBottomBar.addItem(likes);
+    }
+
+    @Override
+    public void itemSelect(int selectedID) {
+
     }
 }
