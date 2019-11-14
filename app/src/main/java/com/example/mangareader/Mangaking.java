@@ -1,18 +1,28 @@
 package com.example.mangareader;
 
 import android.annotation.SuppressLint;
+import android.content.ClipData;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import java.util.ArrayList;
 
 public class Mangaking extends Fragment implements ItemSelector {
     private static Mangaking mangaking;
     private CustomBottomBar customBottomBar;
     private Context context;
+    private ListView lstManga;
+    private ArrayList<Manga> mangaList;
+    private HomeScreen homeScreen;
+    private FragmentManager fragmentManager;
 
     public Mangaking(){
         //require empty public constructor
@@ -37,6 +47,10 @@ public class Mangaking extends Fragment implements ItemSelector {
         this.customBottomBar.changeDividerColor(getString(R.color.colorBlue));
         this.customBottomBar.hideDivider();
         this.customBottomBar.apply(ItemSelector.HOME);
+        this.mangaList = new ArrayList<>();
+        this.homeScreen = HomeScreen.createHomeScreen(this.context,this.mangaList);
+        this.fragmentManager = this.getChildFragmentManager();
+
         return view;
     }
 
@@ -53,6 +67,24 @@ public class Mangaking extends Fragment implements ItemSelector {
 
     @Override
     public void itemSelect(int selectedID) {
-
+        FragmentTransaction ft = this.fragmentManager.beginTransaction();
+        switch (selectedID){
+            case ItemSelector.HOME:
+                //todo do something, when Bookmark is selected
+                if(this.homeScreen.isAdded()){
+                    ft.show(this.homeScreen);
+                }
+                else{
+                    ft.add(R.id.fragment_container,this.homeScreen);
+                }
+                break;
+            case ItemSelector.BOOKMARKS:
+                //todo do something, when Likes is selected
+                break;
+            case ItemSelector.LIKES:
+                //todo do something, when Search is selected
+                break;
+        }
+        ft.commit();
     }
 }
