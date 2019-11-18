@@ -67,23 +67,15 @@ public class Mangaking extends Fragment implements ItemSelector {
 
     @Override
     public void itemSelect(int selectedID) {
-        FragmentTransaction ft = this.getChildFragmentManager().beginTransaction();
+        FragmentTransaction ft = this.fragmentManager.beginTransaction();
         switch (selectedID){
             case ItemSelector.HOME:
                 //todo do something, when Bookmark is selected
-                if(!this.homeScreen.isAdded()) {
-                    try {
-                        //FragmentTransaction trasection =
-                        getChildFragmentManager().beginTransaction();
-                        ft.replace(R.id.mangaking, this.homeScreen);
-                        ft.addToBackStack(null);
-                    } catch (Exception e) {
-                        // TODO: handle exception
-                        // AppConstants.printLog(e.getMessage());
-                    }
-                }
-                else {
+                if(this.homeScreen.isAdded()){
                     ft.show(this.homeScreen);
+                }
+                else{
+                    ft.add(R.id.mangaking,this.homeScreen);
                 }
                 break;
             case ItemSelector.BOOKMARKS:
