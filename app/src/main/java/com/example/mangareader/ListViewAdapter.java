@@ -38,6 +38,7 @@ public class ListViewAdapter extends ArrayAdapter<Manga> {
         TextView textViewAlias = listViewItem.findViewById(R.id.textViewAlias);
         TextView textViewCategory = listViewItem.findViewById(R.id.textViewCategory);
         TextView textViewStatus = listViewItem.findViewById(R.id.textViewStatus);
+        TextView textViewRating = listViewItem.findViewById(R.id.textViewHits);
         ImageView imgView = listViewItem.findViewById(R.id.Poster);
 
 
@@ -59,6 +60,7 @@ public class ListViewAdapter extends ArrayAdapter<Manga> {
             textViewCategory.setText(category);
         }
         textViewStatus.setText(mangaItem.getStatus());
+        textViewRating.setText(mangaItem.getRating());
 
         if(mangaItem.getImage().equals("null")){
             Glide.with(context).load(R.drawable.placeholder).into(imgView);

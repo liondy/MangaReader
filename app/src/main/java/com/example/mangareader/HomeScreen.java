@@ -69,6 +69,7 @@ public class HomeScreen extends Fragment {
                                         mangaReader.getString("a"),
                                         mangaReader.getString("c"),
                                         mangaReader.getString("s"),
+                                        mangaReader.getString("h"),
                                         mangaReader.getString("im"));
 
                                 mangaList.add(manga);
