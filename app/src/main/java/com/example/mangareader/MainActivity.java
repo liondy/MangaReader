@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
                 ft.hide(this.mangaking);
             }
         }
-        else if(page==FragmentListener.HOME_SCREEN){
+        else if(page==FragmentListener.MANGAKING){
             if(this.mangaking.isAdded()){
                 ft.show(this.mangaking);
             }

@@ -22,7 +22,6 @@ public class Mangaking extends Fragment implements ItemSelector {
     private ListView lstManga;
     private ArrayList<Manga> mangaList;
     private HomeScreen homeScreen;
-    private FragmentManager fragmentManager;
 
     public Mangaking(){
         //require empty public constructor
@@ -40,6 +39,8 @@ public class Mangaking extends Fragment implements ItemSelector {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.mangaking,container,false);
         this.customBottomBar = new CustomBottomBar(this.context,view.findViewById(R.id.customBottomBar),this);
+        this.mangaList = new ArrayList<>();
+        this.homeScreen = HomeScreen.createHomeScreen(this.context,this.mangaList);
         this.initItems();
         this.customBottomBar.changeBackground(getString(R.color.colorWhite));
         this.customBottomBar.setDefaultBackground(getString(R.color.colorWhite));
@@ -47,9 +48,7 @@ public class Mangaking extends Fragment implements ItemSelector {
         this.customBottomBar.changeDividerColor(getString(R.color.colorBlue));
         this.customBottomBar.hideDivider();
         this.customBottomBar.apply(ItemSelector.HOME);
-        this.mangaList = new ArrayList<>();
-        this.homeScreen = HomeScreen.createHomeScreen(this.context,this.mangaList);
-        this.fragmentManager = this.getChildFragmentManager();
+        System.out.println("Home Screen is Added: "+homeScreen.isAdded());
 
         return view;
     }
@@ -67,7 +66,9 @@ public class Mangaking extends Fragment implements ItemSelector {
 
     @Override
     public void itemSelect(int selectedID) {
-        FragmentTransaction ft = this.fragmentManager.beginTransaction();
+        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+        System.out.println("Home Screen is Added: "+homeScreen.isAdded());
+        System.out.println("Selected ID: "+selectedID);
         switch (selectedID){
             case ItemSelector.HOME:
                 //todo do something, when Bookmark is selected
@@ -75,14 +76,21 @@ public class Mangaking extends Fragment implements ItemSelector {
                     ft.show(this.homeScreen);
                 }
                 else{
+                    System.out.println("masuk sini gak sih");
                     ft.add(R.id.mangaking,this.homeScreen);
                 }
                 break;
             case ItemSelector.BOOKMARKS:
                 //todo do something, when Likes is selected
+                if(this.homeScreen.isAdded()){
+                    ft.hide(this.homeScreen);
+                }
                 break;
             case ItemSelector.LIKES:
                 //todo do something, when Search is selected
+                if(this.homeScreen.isAdded()){
+                    ft.hide(this.homeScreen);
+                }
                 break;
         }
         ft.commit();

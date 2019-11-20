@@ -5,6 +5,8 @@
     <string name="item_0">Home</string>
     <string name="item_1">Bookmarks</string>
     <string name="item_2">Likes</string>
-    <string name="id_text">id</string>
-    <string name="title_text">title</string>
+    <string name="alias_text">alias : </string>
+    <string name="title_text">title : </string>
+    <string name="status_text">status : </string>
+    <string name="category_text">category : </string>
 </resources>

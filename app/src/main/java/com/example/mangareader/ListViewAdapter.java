@@ -32,19 +32,41 @@ public class ListViewAdapter extends ArrayAdapter<Manga> {
 
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        @SuppressLint("ViewHolder") View listViewItem = inflater.inflate(R.layout.home_screen, null, true);
+        @SuppressLint("ViewHolder") View listViewItem = inflater.inflate(R.layout.list_manga, null, true);
 
-        TextView textViewNo = listViewItem.findViewById(R.id.textViewNo);
-        TextView textViewName = listViewItem.findViewById(R.id.textViewName);
-        ImageView imgVIew = listViewItem.findViewById(R.id.Poster);
+        TextView textViewTitle = listViewItem.findViewById(R.id.textViewName);
+        TextView textViewAlias = listViewItem.findViewById(R.id.textViewAlias);
+        TextView textViewCategory = listViewItem.findViewById(R.id.textViewCategory);
+        TextView textViewStatus = listViewItem.findViewById(R.id.textViewStatus);
+        ImageView imgView = listViewItem.findViewById(R.id.Poster);
 
 
-        Manga playerItem = mangaList.get(id);
+        Manga mangaItem = mangaList.get(id);
 
-        textViewNo.setText(playerItem.getId());
-        textViewName.setText(playerItem.getTitle());
+        textViewTitle.setText(mangaItem.getTitle());
+        textViewAlias.setText(mangaItem.getAlias());
+        if(mangaItem.getCategory().equals("[]")){
+            textViewCategory.setText("-");
+        }
+        else{
+            String category="";
+            for (int i = 0 ; i<mangaItem.getCategory().length() ; i++){
+                if(mangaItem.getCategory().charAt(i)=='[' || mangaItem.getCategory().charAt(i)==']' || mangaItem.getCategory().charAt(i)=='"'){
+                    continue;
+                }
+                category+=mangaItem.getCategory().charAt(i);
+            }
+            textViewCategory.setText(category);
+        }
+        textViewStatus.setText(mangaItem.getStatus());
 
-        Glide.with(context).load(playerItem.getImage()).into(imgVIew);
+        if(mangaItem.getImage().equals("null")){
+            Glide.with(context).load(R.drawable.placeholder).into(imgView);
+        }
+        else{
+            Glide.with(context).load("https://cdn.mangaeden.com/mangasimg/200x/"+mangaItem.getImage()).into(imgView);
+        }
+
 
         return listViewItem;
     }

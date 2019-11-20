@@ -33,7 +33,7 @@ public class SplashScreen extends Fragment {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            fl.showPage(FragmentListener.HOME_SCREEN);
+                            fl.showPage(FragmentListener.MANGAKING);
                         }
                     });
                 } catch (InterruptedException e) {

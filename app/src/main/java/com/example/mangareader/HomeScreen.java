@@ -37,7 +37,7 @@ public class HomeScreen extends Fragment {
         if(homeScreen==null){
             homeScreen = new HomeScreen();
             homeScreen.context = context;
-            homeScreen.mangaList = mangaList;
+            homeScreen.mangaList = (ArrayList<Manga>) mangaList.clone();
         }
         return homeScreen;
     }
@@ -45,11 +45,11 @@ public class HomeScreen extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.home_screen,container,false);
         this.listManga = (ListView) view.findViewById(R.id.listManga);
-        
+        this.loadManga();
         return view;
     }
 
-    private void loadPlayer() {
+    private void loadManga() {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, JSON_URL,
                 new Response.Listener<String>() {
                     @Override
@@ -57,16 +57,19 @@ public class HomeScreen extends Fragment {
 
                         try {
                             JSONObject obj = new JSONObject(response);
-                            JSONArray mangalist = obj.getJSONArray("result");
+                            JSONArray mangalist = obj.getJSONArray("manga");
 
                             for (int i = 0; i < mangalist.length(); i++) {
 
-                                JSONObject playerObject = mangalist.getJSONObject(i);
+                                JSONObject mangaReader = mangalist.getJSONObject(i);
 
 
-                                Manga manga = new Manga(playerObject.getString("i"),
-                                        playerObject.getString("t"),
-                                        playerObject.getString("im"));
+                                Manga manga = new Manga(mangaReader.getString("i"),
+                                        mangaReader.getString("t"),
+                                        mangaReader.getString("a"),
+                                        mangaReader.getString("c"),
+                                        mangaReader.getString("s"),
+                                        mangaReader.getString("im"));
 
                                 mangaList.add(manga);
                             }

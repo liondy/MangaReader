@@ -21,13 +21,12 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private String defaultBackground;
     private String defaultTint;
     private ItemSelector itemSelectorInterface;
-    private Mangaking mangaking;
 
     public ItemAdapter(int defaultOpenIndex, ArrayList<CustomBottomItem> items, ItemSelector itemSelectorInterface) {
         this.items = items;
         this.itemSelectorInterface = itemSelectorInterface;
         setDefaultOpen(defaultOpenIndex);
-        this.mangaking.itemSelect(defaultOpenIndex);
+        this.itemSelectorInterface.itemSelect(defaultOpenIndex);
     }
 
     @NonNull

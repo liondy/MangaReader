@@ -1,11 +1,19 @@
 package com.example.mangareader;
 
 public class Manga {
-    private String id, title, image;
+    private String id;
+    private String title;
+    private String alias;
+    private String category;
+    private String status;
+    private String image;
 
-    public Manga(String id, String title, String image) {
+    public Manga(String id, String title, String alias, String category, String status, String image) {
         this.id = id;
         this.title = title;
+        this.alias = alias;
+        this.category = category;
+        this.status = status;
         this.image = image;
     }
 
@@ -19,5 +27,25 @@ public class Manga {
 
     public String getImage() {
         return image;
+    }
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public String getStatus() {
+        if(this.status.equals("0")){
+            return "Suspended";
+        }
+        else if(this.status.equals("1")) {
+            return "Ongoing";
+        }
+        else{
+            return "Complete";
+        }
     }
 }

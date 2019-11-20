@@ -4,8 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
-    android:id="@+id/mangaking"
     tools:context=".Mangaking">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/mangaking"
+        android:fitsSystemWindows="false"/>
 
     <include
         android:id="@+id/customBottomBar"
