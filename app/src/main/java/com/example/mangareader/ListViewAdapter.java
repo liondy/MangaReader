@@ -55,7 +55,12 @@ public class ListViewAdapter extends ArrayAdapter<Manga> {
                 if(mangaItem.getCategory().charAt(i)=='[' || mangaItem.getCategory().charAt(i)==']' || mangaItem.getCategory().charAt(i)=='"'){
                     continue;
                 }
-                category+=mangaItem.getCategory().charAt(i);
+                else if(mangaItem.getCategory().charAt(i)==','){
+                    category+=mangaItem.getCategory().charAt(i)+" ";
+                }
+                else{
+                    category+=mangaItem.getCategory().charAt(i);
+                }
             }
             textViewCategory.setText(category);
         }
