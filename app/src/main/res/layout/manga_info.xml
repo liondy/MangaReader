@@ -1,113 +1,130 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context="com.example.mangareader.MangaInfo">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="match_parent"
+    <ScrollView
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textSize="50sp"
-        android:textColor="@color/colorBlack"
-        android:layout_weight="0.01"/>
+        android:id="@+id/scrollView">
 
-    <LinearLayout
-        android:layout_width="200dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_height="400dp"
-        android:layout_weight="0.5">
-
-        <ImageView
-            android:id="@+id/iv_gambar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/backgorund" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_weight="1"
-        android:layout_marginStart="8dp"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:layout_width="match_parent"
+        <LinearLayout
             android:layout_height="wrap_content"
-            android:text="@string/rating_text"
-            android:textAllCaps="true"
-            android:textStyle="bold"
-            android:textColor="@color/colorBlack"/>
-
-        <TextView
-            android:id="@+id/rank_des"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorBlack"/>
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/author_text"
-            android:textAllCaps="true"
-            android:textStyle="bold"
-            android:textColor="@color/colorBlack"/>
-        <TextView
-            android:id="@+id/author_des"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorBlack"/>
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="50sp"
+                android:textAlignment="center"
+                android:textColor="@color/colorBlack"
+                android:layout_weight="0.01"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/category_text"
-            android:textAllCaps="true"
-            android:textStyle="bold"
-            android:textColor="@color/colorBlack"/>
+            <LinearLayout
+                android:layout_width="200dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="400dp"
+                android:layout_weight="0.5">
 
-        <TextView
-            android:id="@+id/genre_des"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorBlack"/>
+                <ImageView
+                    android:id="@+id/iv_gambar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/backgorund" />
+            </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/status_text"
-            android:textAllCaps="true"
-            android:textStyle="bold"
-            android:textColor="@color/colorBlack"/>
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/status_des"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorBlack"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rating_text"
+                    android:textAllCaps="true"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorBlack"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/summary_text"
-            android:textAllCaps="true"
-            android:textStyle="bold"
-            android:textColor="@color/colorBlack"/>
+                <TextView
+                    android:id="@+id/rank_des"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"/>
 
-        <TextView
-            android:id="@+id/summary_des"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorBlack"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/author_text"
+                    android:textAllCaps="true"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorBlack"/>
+                <TextView
+                    android:id="@+id/author_des"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"/>
 
-    </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/category_text"
+                    android:textAllCaps="true"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorBlack"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Chapter"
-        android:layout_weight="0.1"
-        android:textSize="30dp"/>
+                <TextView
+                    android:id="@+id/genre_des"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/status_text"
+                    android:textAllCaps="true"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorBlack"/>
+
+                <TextView
+                    android:id="@+id/status_des"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/summary_text"
+                    android:textAllCaps="true"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorBlack"/>
+
+                <TextView
+                    android:id="@+id/summary_des"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Chapter"
+                android:layout_weight="0.1"
+                android:textSize="30dp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>
