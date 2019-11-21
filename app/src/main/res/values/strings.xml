@@ -12,4 +12,5 @@
     <string name="rating_text">rating : </string>
     <string name="summary_text">Summary :</string>
     <string name="author_text">Author :</string>
+    <string name="search_text">Search...</string>
 </resources>

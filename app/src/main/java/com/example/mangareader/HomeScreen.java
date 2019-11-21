@@ -2,10 +2,13 @@ package com.example.mangareader;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
@@ -33,6 +36,8 @@ public class HomeScreen extends Fragment implements AdapterView.OnItemClickListe
     private static final String JSON_URL = "https://www.mangaeden.com/api/list/0/";
     private ArrayList<Manga> mangaList;
     private ItemSelector itemSelector;
+    private EditText editSearch;
+    private ListViewAdapter adapter;
 
     public HomeScreen(){
 
@@ -51,10 +56,30 @@ public class HomeScreen extends Fragment implements AdapterView.OnItemClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.home_screen,container,false);
         this.listManga = (ListView) view.findViewById(R.id.listManga);
-        System.out.println("AAAAAAAAAA");
         this.listManga.setOnItemClickListener(this);
-        System.out.println("BBBBBBBBBB");
         this.loadManga();
+        this.editSearch = (EditText) view.findViewById(R.id.editSearch);
+
+        this.editSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                for(Manga manga : mangaList){
+                    String title = manga.getTitle();
+                    if(title.equals(charSequence))
+                    adapter.getFilter().filter(charSequence);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
         return view;
     }
 
@@ -84,7 +109,7 @@ public class HomeScreen extends Fragment implements AdapterView.OnItemClickListe
                                 mangaList.add(manga);
                             }
 
-                            ListViewAdapter adapter = new ListViewAdapter(mangaList, context);
+                            adapter = new ListViewAdapter(mangaList, context);
 
                             listManga.setAdapter(adapter);
 
