@@ -8,81 +8,98 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="title"
-        android:textSize="50dp"
+        android:textSize="50sp"
+        android:textColor="@color/colorBlack"
         android:layout_weight="0.01"/>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_weight="0.7">
+        android:layout_width="200dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="400dp"
+        android:layout_weight="0.5">
 
         <ImageView
             android:id="@+id/iv_gambar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/backgorund"
-            android:layout_weight="1"
-            />
+            android:src="@drawable/backgorund" />
+    </LinearLayout>
 
-        <LinearLayout
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_marginStart="8dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1">
+            android:text="@string/rating_text"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textColor="@color/colorBlack"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Rank:"/>
-            <TextView
-                android:id="@+id/rank_des"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Keterangan Rank:"/>
+        <TextView
+            android:id="@+id/rank_des"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Author:"/>
-            <TextView
-                android:id="@+id/author_des"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Keterangan Author:"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/author_text"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textColor="@color/colorBlack"/>
+        <TextView
+            android:id="@+id/author_des"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Genre:"/>
-            <TextView
-                android:id="@+id/genre_des"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Keterangan Genre:"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/category_text"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textColor="@color/colorBlack"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Status:"/>
-            <TextView
-                android:id="@+id/status_des"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Keterangan status:"/>
+        <TextView
+            android:id="@+id/genre_des"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Summary:"/>
-            <TextView
-                android:id="@+id/summary_des"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Keterangan Summary:"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/status_text"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textColor="@color/colorBlack"/>
 
-        </LinearLayout>
+        <TextView
+            android:id="@+id/status_des"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/summary_text"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textColor="@color/colorBlack"/>
+
+        <TextView
+            android:id="@+id/summary_des"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"/>
 
     </LinearLayout>
 

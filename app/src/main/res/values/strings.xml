@@ -10,4 +10,6 @@
     <string name="status_text">status : </string>
     <string name="category_text">genres : </string>
     <string name="rating_text">rating : </string>
+    <string name="summary_text">Summary :</string>
+    <string name="author_text">Author :</string>
 </resources>

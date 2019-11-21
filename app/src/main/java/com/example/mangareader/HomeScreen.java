@@ -23,6 +23,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class HomeScreen extends Fragment implements AdapterView.OnItemClickListener {
@@ -50,7 +51,9 @@ public class HomeScreen extends Fragment implements AdapterView.OnItemClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.home_screen,container,false);
         this.listManga = (ListView) view.findViewById(R.id.listManga);
+        System.out.println("AAAAAAAAAA");
         this.listManga.setOnItemClickListener(this);
+        System.out.println("BBBBBBBBBB");
         this.loadManga();
         return view;
     }
@@ -128,6 +131,7 @@ public class HomeScreen extends Fragment implements AdapterView.OnItemClickListe
         RequestQueue requestQueue = Volley.newRequestQueue(this.context);
         requestQueue.add(stringRequest);
         this.itemSelector.itemSelect(ItemSelector.INFO);
+        System.out.println(manga.getCategory());
         this.itemSelector.setManga(manga.getImage(),manga.getTitle(),manga.getRating(),manga.getAuthor(),manga.getCategory(),manga.getStatus(),manga.getSummary());
     }
 }

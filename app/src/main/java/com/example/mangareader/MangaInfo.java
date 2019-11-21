@@ -44,7 +44,12 @@ public class MangaInfo extends Fragment {
         this.genre.setText(genres);
         this.status.setText(status);
         this.summary.setText(summary);
-        Glide.with(context).load("https://cdn.mangaeden.com/mangasimg/200x/"+image).into(this.poster);
+        if(image.equals("null")){
+            Glide.with(this.context).load(R.drawable.backgorund).into(this.poster);
+        }
+        else{
+            Glide.with(context).load("https://cdn.mangaeden.com/mangasimg/200x/"+image).into(this.poster);
+        }
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -57,12 +62,7 @@ public class MangaInfo extends Fragment {
         this.status = view.findViewById(R.id.status_des);
         this.summary = view.findViewById(R.id.summary_des);
 
-        this.title.setText(this.getArguments().getString("title",""));
-        this.rank.setText(this.getArguments().getString("rank",""));
-        this.author.setText(this.getArguments().getString("author",""));
-        this.genre.setText(this.getArguments().getString("genre",""));
-        this.status.setText(this.getArguments().getString("status",""));
-        this.summary.setText(this.getArguments().getString("summary",""));
+        System.out.println("ADDED MANGA INFO");
         return view;
     }
 }

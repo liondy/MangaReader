@@ -46,7 +46,10 @@ public class Manga {
         else{
             String category="";
             for (int i = 0 ; i < this.category.length() ; i++){
-                if(this.category.charAt(i)==','){
+                if(this.category.charAt(i)=='['||this.category.charAt(i)==']'||this.category.charAt(i)=='"'){
+                    continue;
+                }
+                else if(this.category.charAt(i)==','){
                     category+=this.category.charAt(i)+" ";
                 }
                 else{
@@ -89,6 +92,9 @@ public class Manga {
     }
 
     public String getAuthor(){
+        if(this.author.equals("")){
+            return "-";
+        }
         return this.author;
     }
 }
