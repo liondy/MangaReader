@@ -9,6 +9,7 @@ public class Manga {
     private String image;
     private String rating;
     private String summary;
+    private String author;
 
     public Manga(String id, String title, String alias, String category, String status, String rating, String image) {
         this.id = id;
@@ -19,6 +20,7 @@ public class Manga {
         this.rating = rating;
         this.image = image;
         this.summary = "";
+        this.author = "";
     }
 
     public String getId() {
@@ -71,10 +73,22 @@ public class Manga {
         return rating;
     }
 
+    public void setSummary(String summary){
+        this.summary = summary;
+    }
+
     public String getSummary(){
         if(summary.equals("")){
             return "-";
         }
         return summary;
+    }
+
+    public void setAuthor(String author){
+        this.author = author;
+    }
+
+    public String getAuthor(){
+        return this.author;
     }
 }

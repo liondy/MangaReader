@@ -25,23 +25,24 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class HomeScreen extends Fragment {
+public class HomeScreen extends Fragment implements AdapterView.OnItemClickListener {
     private static HomeScreen homeScreen;
     private Context context;
     private ListView listManga;
     private static final String JSON_URL = "https://www.mangaeden.com/api/list/0/";
     private ArrayList<Manga> mangaList;
-    private FragmentManager fragmentManager;
+    private ItemSelector itemSelector;
 
     public HomeScreen(){
 
     }
 
-    public static HomeScreen createHomeScreen(Context context, ArrayList<Manga> mangaList){
+    public static HomeScreen createHomeScreen(Context context, ArrayList<Manga> mangaList, Mangaking mangaking){
         if(homeScreen==null){
             homeScreen = new HomeScreen();
             homeScreen.context = context;
             homeScreen.mangaList = (ArrayList<Manga>) mangaList.clone();
+            homeScreen.itemSelector = mangaking;
         }
         return homeScreen;
     }
@@ -49,23 +50,7 @@ public class HomeScreen extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.home_screen,container,false);
         this.listManga = (ListView) view.findViewById(R.id.listManga);
-        final FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-        this.listManga.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                System.out.println("klik: "+i);
-                Manga manga = mangaList.get(i);
-                MangaInfo mangaInfo = new MangaInfo(context);
-                mangaInfo.setManga(manga);
-                if(mangaInfo.isAdded()){
-                    ft.show(mangaInfo);
-                }
-                else{
-                    ft.add(R.id.mangainfo,mangaInfo);
-                }
-                ft.commit();
-            }
-        });
+        this.listManga.setOnItemClickListener(this);
         this.loadManga();
         return view;
     }
@@ -114,5 +99,35 @@ public class HomeScreen extends Fragment {
 
         RequestQueue requestQueue = Volley.newRequestQueue(this.context);
         requestQueue.add(stringRequest);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        final Manga manga = this.mangaList.get(i);
+        String mangaId = manga.getId();
+        String url = "https://www.mangaeden.com/api/manga/"+mangaId+"/";
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    String description = obj.getString("description");
+                    String author = obj.getString("author");
+                    manga.setAuthor(author);
+                    manga.setSummary(description);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("error");
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(this.context);
+        requestQueue.add(stringRequest);
+        this.itemSelector.itemSelect(ItemSelector.INFO);
+        this.itemSelector.setManga(manga.getImage(),manga.getTitle(),manga.getRating(),manga.getAuthor(),manga.getCategory(),manga.getStatus(),manga.getSummary());
     }
 }

@@ -1,7 +1,6 @@
 package com.example.mangareader;
 
 import android.annotation.SuppressLint;
-import android.content.ClipData;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,6 +21,8 @@ public class Mangaking extends Fragment implements ItemSelector {
     private ListView lstManga;
     private ArrayList<Manga> mangaList;
     private HomeScreen homeScreen;
+    private FragmentManager fragmentManager;
+    private MangaInfo mangaInfo;
 
     public Mangaking(){
         //require empty public constructor
@@ -38,9 +39,13 @@ public class Mangaking extends Fragment implements ItemSelector {
     @SuppressLint("ResourceType")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.mangaking,container,false);
+        this.fragmentManager = this.getChildFragmentManager();
+        FragmentTransaction ft = this.fragmentManager.beginTransaction();
         this.customBottomBar = new CustomBottomBar(this.context,view.findViewById(R.id.customBottomBar),this);
         this.mangaList = new ArrayList<>();
-        this.homeScreen = HomeScreen.createHomeScreen(this.context,this.mangaList);
+        this.homeScreen = HomeScreen.createHomeScreen(this.context,this.mangaList,this);
+        this.mangaInfo = MangaInfo.createMangaInfo(this.context);
+        ft.add(R.id.mangaking,this.mangaInfo).addToBackStack(null).commit();
         this.initItems();
         this.customBottomBar.changeBackground(getString(R.color.colorWhite));
         this.customBottomBar.setDefaultBackground(getString(R.color.colorWhite));
@@ -66,12 +71,11 @@ public class Mangaking extends Fragment implements ItemSelector {
 
     @Override
     public void itemSelect(int selectedID) {
-        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+        FragmentTransaction ft = this.fragmentManager.beginTransaction();
         System.out.println("Home Screen is Added: "+homeScreen.isAdded());
         System.out.println("Selected ID: "+selectedID);
         switch (selectedID){
             case ItemSelector.HOME:
-                //todo do something, when Bookmark is selected
                 if(this.homeScreen.isAdded()){
                     ft.show(this.homeScreen);
                 }
@@ -79,20 +83,50 @@ public class Mangaking extends Fragment implements ItemSelector {
                     System.out.println("masuk sini gak sih");
                     ft.add(R.id.mangaking,this.homeScreen);
                 }
+                if(this.mangaInfo.isAdded()){
+                    ft.hide(this.mangaInfo);
+                }
                 break;
             case ItemSelector.BOOKMARKS:
-                //todo do something, when Likes is selected
                 if(this.homeScreen.isAdded()){
                     ft.hide(this.homeScreen);
+                }
+                if(this.mangaInfo.isAdded()){
+                    ft.hide(this.mangaInfo);
                 }
                 break;
             case ItemSelector.LIKES:
-                //todo do something, when Search is selected
                 if(this.homeScreen.isAdded()){
                     ft.hide(this.homeScreen);
                 }
+                if(this.mangaInfo.isAdded()){
+                    ft.hide(this.mangaInfo);
+                }
+                break;
+            case ItemSelector.INFO:
+                if(this.mangaInfo.isAdded()){
+                    ft.show(mangaInfo);
+                }
+                else{
+                    ft.add(R.id.mangaking,this.mangaInfo);
+                }
+                if(this.homeScreen.isAdded()){
+                    ft.hide(this.homeScreen);
+                }
+                if(this.mangaInfo.isAdded()){
+                    ft.hide(this.mangaInfo);
+                }
                 break;
         }
+        ft.commit();
+    }
+
+    @Override
+    public void setManga(String image, String title, String rank, String authors, String genres, String status, String summary) {
+        FragmentTransaction ft = this.fragmentManager.beginTransaction();
+        this.mangaInfo.title.setText(title);
+        this.mangaInfo.rank.setText(rank);
+//        this.mangaInfo.setText(image,title,rank,authors,genres,status,summary);
         ft.commit();
     }
 }
