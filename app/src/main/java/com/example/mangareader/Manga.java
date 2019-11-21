@@ -36,7 +36,21 @@ public class Manga {
     }
 
     public String getCategory() {
-        return category;
+        if(this.category.equals("[]")){
+            return "-";
+        }
+        else{
+            String category="";
+            for (int i = 0 ; i < this.category.length() ; i++){
+                if(this.category.charAt(i)==','){
+                    category+=this.category.charAt(i)+" ";
+                }
+                else{
+                    category+=this.category.charAt(i);
+                }
+            }
+            return category;
+        }
     }
 
     public String getStatus() {

@@ -46,24 +46,7 @@ public class ListViewAdapter extends ArrayAdapter<Manga> {
 
         textViewTitle.setText(mangaItem.getTitle());
         textViewAlias.setText(mangaItem.getAlias());
-        if(mangaItem.getCategory().equals("[]")){
-            textViewCategory.setText("-");
-        }
-        else{
-            String category="";
-            for (int i = 0 ; i<mangaItem.getCategory().length() ; i++){
-                if(mangaItem.getCategory().charAt(i)=='[' || mangaItem.getCategory().charAt(i)==']' || mangaItem.getCategory().charAt(i)=='"'){
-                    continue;
-                }
-                else if(mangaItem.getCategory().charAt(i)==','){
-                    category+=mangaItem.getCategory().charAt(i)+" ";
-                }
-                else{
-                    category+=mangaItem.getCategory().charAt(i);
-                }
-            }
-            textViewCategory.setText(category);
-        }
+        textViewCategory.setText(mangaItem.getCategory());
         textViewStatus.setText(mangaItem.getStatus());
         textViewRating.setText(mangaItem.getRating());
 
