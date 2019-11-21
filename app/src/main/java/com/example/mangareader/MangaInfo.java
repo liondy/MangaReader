@@ -21,9 +21,12 @@ public class MangaInfo extends Fragment {
     private Manga manga;
     private Context context;
 
-    public MangaInfo(Manga manga, Context context){
-        this.manga = manga;
+    public MangaInfo(Context context){
         this.context = context;
+    }
+
+    public void setManga(Manga manga){
+        this.manga = manga;
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -34,9 +37,11 @@ public class MangaInfo extends Fragment {
         this.status = view.findViewById(R.id.status_des);
         this.summary = view.findViewById(R.id.summary_des);
 
-        this.title.setText(this.manga.getTitle());
-        this.genres.setText(this.manga.getCategory());
-        this.status.setText(this.manga.getStatus());
+        if(this.manga!=null){
+            this.title.setText(this.manga.getTitle());
+            this.genres.setText(this.manga.getCategory());
+            this.status.setText(this.manga.getStatus());
+        }
 
         return view;
     }

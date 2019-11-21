@@ -9,6 +9,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -29,6 +31,7 @@ public class HomeScreen extends Fragment {
     private ListView listManga;
     private static final String JSON_URL = "https://www.mangaeden.com/api/list/0/";
     private ArrayList<Manga> mangaList;
+    private FragmentManager fragmentManager;
 
     public HomeScreen(){
 
@@ -46,11 +49,21 @@ public class HomeScreen extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.home_screen,container,false);
         this.listManga = (ListView) view.findViewById(R.id.listManga);
+        final FragmentTransaction ft = getChildFragmentManager().beginTransaction();
         this.listManga.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                System.out.println("klik: "+i);
                 Manga manga = mangaList.get(i);
-                MangaInfo mangaInfo = new MangaInfo(manga,context);
+                MangaInfo mangaInfo = new MangaInfo(context);
+                mangaInfo.setManga(manga);
+                if(mangaInfo.isAdded()){
+                    ft.show(mangaInfo);
+                }
+                else{
+                    ft.add(R.id.mangainfo,mangaInfo);
+                }
+                ft.commit();
             }
         });
         this.loadManga();

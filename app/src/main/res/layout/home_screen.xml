@@ -7,6 +7,12 @@
     android:orientation="vertical"
     tools:context="com.example.mangareader.Mangaking">
 
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mangainfo"
+        android:fitsSystemWindows="false"/>
+
     <ListView
         android:id="@+id/listManga"
         android:layout_width="match_parent"
