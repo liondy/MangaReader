@@ -8,6 +8,7 @@ public class Manga {
     private String status;
     private String image;
     private String rating;
+    private String summary;
 
     public Manga(String id, String title, String alias, String category, String status, String rating, String image) {
         this.id = id;
@@ -17,6 +18,7 @@ public class Manga {
         this.status = status;
         this.rating = rating;
         this.image = image;
+        this.summary = "";
     }
 
     public String getId() {
@@ -67,5 +69,12 @@ public class Manga {
 
     public String getRating() {
         return rating;
+    }
+
+    public String getSummary(){
+        if(summary.equals("")){
+            return "-";
+        }
+        return summary;
     }
 }
