@@ -8,6 +8,6 @@
     <string name="alias_text">alias : </string>
     <string name="title_text">title : </string>
     <string name="status_text">status : </string>
-    <string name="category_text">category : </string>
+    <string name="category_text">genres : </string>
     <string name="rating_text">rating : </string>
 </resources>
