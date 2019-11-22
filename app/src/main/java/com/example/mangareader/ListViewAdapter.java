@@ -11,21 +11,24 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class ListViewAdapter extends ArrayAdapter<Manga> {
 
-    private List<Manga> mangaList;
+    private ArrayList<Manga> mangaList;
+    private ArrayList<Manga> arraylist;
 
     private Context context;
 
-    public ListViewAdapter(List<Manga> mangaList, Context context) {
+    public ListViewAdapter(ArrayList<Manga> mangaList, Context context) {
         super(context, R.layout.home_screen, mangaList);
+        this.arraylist = new ArrayList<>();
         this.mangaList = mangaList;
+        this.arraylist.addAll(mangaList);
         this.context = context;
     }
-
-
 
     @Override
     public View getView(final int id, View convertView, ViewGroup parent) {
@@ -56,8 +59,22 @@ public class ListViewAdapter extends ArrayAdapter<Manga> {
         else{
             Glide.with(context).load("https://cdn.mangaeden.com/mangasimg/200x/"+mangaItem.getImage()).into(imgView);
         }
-
-
         return listViewItem;
+    }
+
+    public void filter(String charText) {
+        charText = charText.toLowerCase(Locale.getDefault());
+        this.mangaList.clear();
+        if (charText.length() == 0) {
+            this.mangaList.addAll(this.arraylist);
+        }
+        else {
+            for (Manga manga : this.arraylist) {
+                if (manga.getTitle().toLowerCase(Locale.getDefault()).contains(charText)) {
+                    this.mangaList.add(manga);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 }

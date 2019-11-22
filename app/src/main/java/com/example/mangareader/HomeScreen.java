@@ -28,6 +28,7 @@ import org.json.JSONObject;
 
 import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class HomeScreen extends Fragment implements AdapterView.OnItemClickListener {
     private static HomeScreen homeScreen;
@@ -68,16 +69,13 @@ public class HomeScreen extends Fragment implements AdapterView.OnItemClickListe
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                for(Manga manga : mangaList){
-                    String title = manga.getTitle();
-                    if(title.equals(charSequence))
-                    adapter.getFilter().filter(charSequence);
-                }
+
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-
+                String text = editSearch.getText().toString().toLowerCase(Locale.getDefault());
+                adapter.filter(text);
             }
         });
         return view;
