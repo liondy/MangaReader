@@ -1,5 +1,7 @@
 package com.example.mangareader;
 
+import java.util.ArrayList;
+
 public class Manga {
     private String id;
     private String title;
@@ -12,6 +14,7 @@ public class Manga {
     private String author;
     private String chapter_len;
     private String released;
+    private ArrayList<String> chapterList;
 
     public Manga(String id, String title, String alias, String category, String status, String rating, String image) {
         this.id = id;
@@ -25,6 +28,7 @@ public class Manga {
         this.author = "";
         this.chapter_len = "";
         this.released = "";
+        this.chapterList = new ArrayList();
     }
 
     public String getId() {

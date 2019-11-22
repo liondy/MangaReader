@@ -144,12 +144,24 @@ public class HomeScreen extends Fragment implements AdapterView.OnItemClickListe
             @Override
             public void onResponse(String response) {
                 try {
-                    System.out.println("sini dulu");
                     JSONObject obj = new JSONObject(response);
                     String description = obj.getString("description");
                     String author = obj.getString("author");
                     String chapterLength = obj.getString("chapters_len");
                     String released = obj.getString("released");
+                    JSONArray chapters = obj.getJSONArray("chapters");
+                    String[] arr = new String[chapters.length()];
+                    for(int i = 0; i < chapters.length(); i++){
+                        arr[i] = chapters.getString(i);
+                        System.out.println(arr[i]);
+                    }
+//                    String chapters = obj.getString("chapters");
+//                    System.out.println(chapters.indexOf(0));
+//                    for (int i=0;i<chapters.length();i++){
+//                        JSONObject chapter = chapters.getJSONObject(i);
+//
+//                        Chapter chap = new Chapter(chapter.get)
+//                    }
                     manga.setAuthor(author);
                     manga.setSummary(description);
                     manga.setChapter_len(chapterLength);
