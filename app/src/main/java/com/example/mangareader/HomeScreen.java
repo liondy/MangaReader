@@ -141,11 +141,14 @@ public class HomeScreen extends Fragment implements AdapterView.OnItemClickListe
             @Override
             public void onResponse(String response) {
                 try {
+                    System.out.println("sini dulu");
                     JSONObject obj = new JSONObject(response);
                     String description = obj.getString("description");
                     String author = obj.getString("author");
                     manga.setAuthor(author);
                     manga.setSummary(description);
+                    itemSelector.setManga(manga.getImage(),manga.getTitle(),manga.getRating(),manga.getAuthor(),manga.getCategory(),manga.getStatus(),manga.getSummary());
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -156,10 +159,11 @@ public class HomeScreen extends Fragment implements AdapterView.OnItemClickListe
                 System.out.println("error");
             }
         });
+        System.out.println("masuk");
         RequestQueue requestQueue = Volley.newRequestQueue(this.context);
         requestQueue.add(stringRequest);
+        System.out.println("sini ajah");
         this.itemSelector.itemSelect(ItemSelector.INFO);
-        System.out.println(manga.getCategory());
         this.itemSelector.setManga(manga.getImage(),manga.getTitle(),manga.getRating(),manga.getAuthor(),manga.getCategory(),manga.getStatus(),manga.getSummary());
         this.editSearch.setText("");
     }
