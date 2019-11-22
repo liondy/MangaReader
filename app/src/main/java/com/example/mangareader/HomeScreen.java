@@ -9,7 +9,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -17,8 +16,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -31,7 +28,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -44,6 +40,7 @@ public class HomeScreen extends Fragment implements AdapterView.OnItemClickListe
     private ItemSelector itemSelector;
     private EditText editSearch;
     private ListViewAdapter adapter;
+    private ChapterAdapter chapterAdapter;
 
     public HomeScreen(){
 
@@ -151,22 +148,23 @@ public class HomeScreen extends Fragment implements AdapterView.OnItemClickListe
                     String released = obj.getString("released");
                     JSONArray chapters = obj.getJSONArray("chapters");
                     String[] arr = new String[chapters.length()];
+                    ArrayList<Chapter> chapterArrayList = new ArrayList<>();
                     for(int i = 0; i < chapters.length(); i++){
                         arr[i] = chapters.getString(i);
-                        System.out.println(arr[i]);
+                        String[] chapterInfo = new String[arr[i].split(",").length];
+                        for(int j = 0; j < chapterInfo.length; j++){
+                            chapterInfo[j] = arr[i].split(",")[j];
+                        }
+                        Chapter chapter = new Chapter(chapterInfo[0],chapterInfo[2],chapterInfo[3]);
+                        chapterArrayList.add(chapter);
                     }
-//                    String chapters = obj.getString("chapters");
-//                    System.out.println(chapters.indexOf(0));
-//                    for (int i=0;i<chapters.length();i++){
-//                        JSONObject chapter = chapters.getJSONObject(i);
-//
-//                        Chapter chap = new Chapter(chapter.get)
-//                    }
                     manga.setAuthor(author);
                     manga.setSummary(description);
                     manga.setChapter_len(chapterLength);
                     manga.setReleased(released);
-                    itemSelector.setManga(manga.getImage(),manga.getTitle(),manga.getReleased(),manga.getRating(),manga.getAuthor(),manga.getCategory(),manga.getChapter_len(),manga.getStatus(),manga.getSummary());
+                    manga.setChapterList(chapterArrayList);
+                    System.out.println("CHAPTER LIST "+manga.getChapterList().get(1).getNumber());
+                    itemSelector.setManga(manga.getImage(),manga.getTitle(),manga.getReleased(),manga.getRating(),manga.getAuthor(),manga.getCategory(),manga.getChapter_len(),manga.getStatus(),manga.getSummary(),manga.getChapterList());
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -178,12 +176,10 @@ public class HomeScreen extends Fragment implements AdapterView.OnItemClickListe
                 System.out.println("error");
             }
         });
-        System.out.println("masuk");
         RequestQueue requestQueue = Volley.newRequestQueue(this.context);
         requestQueue.add(stringRequest);
-        System.out.println("sini ajah");
         this.itemSelector.itemSelect(ItemSelector.INFO);
-        itemSelector.setManga(manga.getImage(),manga.getTitle(),manga.getReleased(),manga.getRating(),manga.getAuthor(),manga.getCategory(),manga.getChapter_len(),manga.getStatus(),manga.getSummary());
+        itemSelector.setManga(manga.getImage(),manga.getTitle(),manga.getReleased(),manga.getRating(),manga.getAuthor(),manga.getCategory(),manga.getChapter_len(),manga.getStatus(),manga.getSummary(), manga.getChapterList());
         this.editSearch.setText("");
     }
 }

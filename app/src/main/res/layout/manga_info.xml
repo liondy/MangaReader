@@ -147,9 +147,14 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Chapter"
+                android:text="@string/chapter_list"
                 android:layout_weight="0.1"
-                android:textSize="30dp"/>
+                android:textSize="30sp"/>
+
+            <ListView
+                android:id="@+id/listChapter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
 

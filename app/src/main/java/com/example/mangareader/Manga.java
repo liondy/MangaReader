@@ -14,7 +14,7 @@ public class Manga {
     private String author;
     private String chapter_len;
     private String released;
-    private ArrayList<String> chapterList;
+    private ArrayList<Chapter> chapterList;
 
     public Manga(String id, String title, String alias, String category, String status, String rating, String image) {
         this.id = id;
@@ -120,5 +120,13 @@ public class Manga {
 
     public void setReleased(String released) {
         this.released = released;
+    }
+
+    public ArrayList<Chapter> getChapterList() {
+        return chapterList;
+    }
+
+    public void setChapterList(ArrayList<Chapter> chapterList) {
+        this.chapterList = chapterList;
     }
 }

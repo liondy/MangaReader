@@ -2,25 +2,46 @@ package com.example.mangareader;
 
 public class Chapter {
 
-    private int number;
-    private int title;
-    private int id;
+    private String number;
+    private String title;
+    private String id;
 
-    public Chapter(int number, int title, int id) {
+    public Chapter(String number, String title, String id) {
         this.number = number;
         this.title = title;
         this.id = id;
     }
 
-    public int getNumber() {
-        return number;
+    public String getNumber() {
+        String num = "";
+        for (int i = 0 ; i < this.number.length() ; i++){
+            if(this.number.charAt(i)=='['||this.number.charAt(i)==']'){
+                continue;
+            }
+            num+=this.number.charAt(i);
+        }
+        return num;
     }
 
-    public int getTitle() {
+    public String getTitle() {
+        String title = "";
+        for (int i = 0 ; i < this.title.length() ; i++){
+            if(this.title.charAt(i)=='['||this.title.charAt(i)==']'){
+                continue;
+            }
+            title+=this.title.charAt(i);
+        }
         return title;
     }
 
-    public int getId() {
+    public String getId() {
+        String id = "";
+        for (int i = 0 ; i < this.id.length() ; i++){
+            if(this.id.charAt(i)=='['||this.id.charAt(i)==']'){
+                continue;
+            }
+            id+=this.number.charAt(i);
+        }
         return id;
     }
 }

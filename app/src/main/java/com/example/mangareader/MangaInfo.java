@@ -14,6 +14,8 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
+
 public class MangaInfo extends Fragment {
     private static MangaInfo mangaInfo;
     private ImageView poster;
@@ -26,6 +28,7 @@ public class MangaInfo extends Fragment {
     private TextView status;
     private TextView summary;
     private Context context;
+    private ListView listChapter;
 
     public MangaInfo(){
         //require empty public constructor
@@ -39,7 +42,7 @@ public class MangaInfo extends Fragment {
         return mangaInfo;
     }
 
-    public void setText(String image, String title, String released, String rank, String authors, String genres, String chapterLength, String status, String summary){
+    public void setText(String image, String title, String released, String rank, String authors, String genres, String chapterLength, String status, String summary, ArrayList<Chapter> chapterList){
         this.title.setText(title);
         this.released.setText(released);
         this.rank.setText(rank);
@@ -54,6 +57,8 @@ public class MangaInfo extends Fragment {
         else{
             Glide.with(context).load("https://cdn.mangaeden.com/mangasimg/200x/"+image).into(this.poster);
         }
+        ChapterAdapter adapter = new ChapterAdapter(chapterList,this.context);
+        this.listChapter.setAdapter(adapter);
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -67,8 +72,7 @@ public class MangaInfo extends Fragment {
         this.chapterLength = view.findViewById(R.id.chapter_des);
         this.status = view.findViewById(R.id.status_des);
         this.summary = view.findViewById(R.id.summary_des);
-
-        System.out.println("ADDED MANGA INFO");
+        listChapter = view.findViewById(R.id.listChapter);
         return view;
     }
 }

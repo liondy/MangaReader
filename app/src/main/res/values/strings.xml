@@ -13,4 +13,6 @@
     <string name="summary_text">Summary :</string>
     <string name="author_text">Author :</string>
     <string name="search_text">Search...</string>
+    <string name="chapter_number">Chapter : </string>
+    <string name="chapter_list">Chapter List :</string>
 </resources>
