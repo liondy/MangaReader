@@ -145,9 +145,13 @@ public class HomeScreen extends Fragment implements AdapterView.OnItemClickListe
                     JSONObject obj = new JSONObject(response);
                     String description = obj.getString("description");
                     String author = obj.getString("author");
+                    String chapterLength = obj.getString("chapters_len");
+                    String released = obj.getString("released");
                     manga.setAuthor(author);
                     manga.setSummary(description);
-                    itemSelector.setManga(manga.getImage(),manga.getTitle(),manga.getRating(),manga.getAuthor(),manga.getCategory(),manga.getStatus(),manga.getSummary());
+                    manga.setChapter_len(chapterLength);
+                    manga.setReleased(released);
+                    itemSelector.setManga(manga.getImage(),manga.getTitle(),manga.getReleased(),manga.getRating(),manga.getAuthor(),manga.getCategory(),manga.getChapter_len(),manga.getStatus(),manga.getSummary());
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -164,7 +168,7 @@ public class HomeScreen extends Fragment implements AdapterView.OnItemClickListe
         requestQueue.add(stringRequest);
         System.out.println("sini ajah");
         this.itemSelector.itemSelect(ItemSelector.INFO);
-        this.itemSelector.setManga(manga.getImage(),manga.getTitle(),manga.getRating(),manga.getAuthor(),manga.getCategory(),manga.getStatus(),manga.getSummary());
+        itemSelector.setManga(manga.getImage(),manga.getTitle(),manga.getReleased(),manga.getRating(),manga.getAuthor(),manga.getCategory(),manga.getChapter_len(),manga.getStatus(),manga.getSummary());
         this.editSearch.setText("");
     }
 }

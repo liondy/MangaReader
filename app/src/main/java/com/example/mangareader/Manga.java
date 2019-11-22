@@ -10,6 +10,8 @@ public class Manga {
     private String rating;
     private String summary;
     private String author;
+    private String chapter_len;
+    private String released;
 
     public Manga(String id, String title, String alias, String category, String status, String rating, String image) {
         this.id = id;
@@ -21,6 +23,8 @@ public class Manga {
         this.image = image;
         this.summary = "";
         this.author = "";
+        this.chapter_len = "";
+        this.released = "";
     }
 
     public String getId() {
@@ -96,5 +100,21 @@ public class Manga {
             return "-";
         }
         return this.author;
+    }
+
+    public String getChapter_len() {
+        return chapter_len;
+    }
+
+    public void setChapter_len(String chapter_len) {
+        this.chapter_len = chapter_len;
+    }
+
+    public String getReleased() {
+        return released;
+    }
+
+    public void setReleased(String released) {
+        this.released = released;
     }
 }
