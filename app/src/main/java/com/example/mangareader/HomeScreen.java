@@ -1,5 +1,6 @@
 package com.example.mangareader;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
@@ -7,6 +8,8 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -129,6 +132,8 @@ public class HomeScreen extends Fragment implements AdapterView.OnItemClickListe
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        InputMethodManager imm = (InputMethodManager) this.context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         final Manga manga = this.mangaList.get(i);
         String mangaId = manga.getId();
         String url = "https://www.mangaeden.com/api/manga/"+mangaId+"/";
@@ -156,5 +161,6 @@ public class HomeScreen extends Fragment implements AdapterView.OnItemClickListe
         this.itemSelector.itemSelect(ItemSelector.INFO);
         System.out.println(manga.getCategory());
         this.itemSelector.setManga(manga.getImage(),manga.getTitle(),manga.getRating(),manga.getAuthor(),manga.getCategory(),manga.getStatus(),manga.getSummary());
+        this.editSearch.setText("");
     }
 }
