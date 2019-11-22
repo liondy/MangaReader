@@ -1,5 +1,6 @@
 package com.example.mangareader;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -120,9 +122,10 @@ public class HomeScreen extends Fragment implements AdapterView.OnItemClickListe
                     }
                 },
                 new Response.ErrorListener() {
+                    @SuppressLint("ShowToast")
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        System.out.println("error");
+                        Toast.makeText(context,"No Internet Found",Toast.LENGTH_LONG).show();
                     }
                 });
 
