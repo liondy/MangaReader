@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -40,7 +41,7 @@ public class HomeScreen extends Fragment implements AdapterView.OnItemClickListe
     private ItemSelector itemSelector;
     private EditText editSearch;
     private ListViewAdapter adapter;
-    private ChapterAdapter chapterAdapter;
+    private ProgressBar progressBar;
 
     public HomeScreen(){
 
@@ -60,6 +61,8 @@ public class HomeScreen extends Fragment implements AdapterView.OnItemClickListe
         View view = inflater.inflate(R.layout.home_screen,container,false);
         this.listManga = (ListView) view.findViewById(R.id.listManga);
         this.listManga.setOnItemClickListener(this);
+        this.progressBar = view.findViewById(R.id.progressBar1);
+        this.progressBar.setVisibility(View.VISIBLE);
         this.loadManga();
         this.editSearch = (EditText) view.findViewById(R.id.editSearch);
 
@@ -128,6 +131,12 @@ public class HomeScreen extends Fragment implements AdapterView.OnItemClickListe
 
         RequestQueue requestQueue = Volley.newRequestQueue(this.context);
         requestQueue.add(stringRequest);
+        requestQueue.addRequestFinishedListener(new RequestQueue.RequestFinishedListener<Object>() {
+            @Override
+            public void onRequestFinished(Request<Object> request) {
+                progressBar.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override
@@ -146,7 +155,6 @@ public class HomeScreen extends Fragment implements AdapterView.OnItemClickListe
                     String author = obj.getString("author");
                     String chapterLength = obj.getString("chapters_len");
                     int panjang = Integer.parseInt(chapterLength);
-                    //System.out.println("panjgaaaaanangng dari ccchahahpppterrrr "+panjang);
                     String released = obj.getString("released");
                     JSONArray chapters = obj.getJSONArray("chapters");
                     String[] arr = new String[panjang];
