@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class Mangaking extends Fragment implements ItemSelector {
     private static Mangaking mangaking;
@@ -23,15 +24,22 @@ public class Mangaking extends Fragment implements ItemSelector {
     private HomeScreen homeScreen;
     private FragmentManager fragmentManager;
     private MangaInfo mangaInfo;
+    private int lastState;
+    private MainPresenter mainPresenter;
+    private Stack<Integer> state;
 
     public Mangaking(){
         //require empty public constructor
     }
 
-    public static Mangaking createMangaApp(Context context){
+    public static Mangaking createMangaApp(Context context, MainPresenter mainPresenter){
         if(mangaking==null){
             mangaking = new Mangaking();
             mangaking.context = context;
+            mangaking.state = new Stack();
+            mangaking.mainPresenter = mainPresenter;
+            mangaking.mainPresenter.setStack(mangaking.state);
+            mangaking.mainPresenter.itemSelector = mangaking;
         }
         return mangaking;
     }
@@ -39,21 +47,23 @@ public class Mangaking extends Fragment implements ItemSelector {
     @SuppressLint("ResourceType")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.mangaking,container,false);
+        this.lastState = ItemSelector.HOME;
         this.fragmentManager = this.getChildFragmentManager();
         FragmentTransaction ft = this.fragmentManager.beginTransaction();
         this.customBottomBar = new CustomBottomBar(this.context,view.findViewById(R.id.customBottomBar),this);
         this.mangaList = new ArrayList<>();
         this.homeScreen = HomeScreen.createHomeScreen(this.context,this.mangaList,this);
         this.mangaInfo = MangaInfo.createMangaInfo(this.context);
-        this.itemSelect(ItemSelector.INFO);
+        this.itemSelect(ItemSelector.INFO,false);
         this.initItems();
+        lastState = ItemSelector.HOME;
+        mainPresenter.stack.clear();
         this.customBottomBar.changeBackground(getString(R.color.colorWhite));
         this.customBottomBar.setDefaultBackground(getString(R.color.colorWhite));
         this.customBottomBar.setDefaultTint(getString(R.color.colorBlack));
         this.customBottomBar.changeDividerColor(getString(R.color.colorBlue));
         this.customBottomBar.hideDivider();
         this.customBottomBar.apply(ItemSelector.HOME);
-        System.out.println("Home Screen is Added 1: "+homeScreen.isAdded());
         ft.hide(this.mangaInfo).commit();
         return view;
     }
@@ -70,23 +80,26 @@ public class Mangaking extends Fragment implements ItemSelector {
     }
 
     @Override
-    public void itemSelect(int selectedID) {
+    public void itemSelect(int selectedID,boolean ispop) {
         FragmentTransaction ft = this.fragmentManager.beginTransaction();
-        System.out.println("Home Screen is Added 2: "+homeScreen.isAdded());
-        System.out.println("Manga Info is Added: "+mangaInfo.isAdded());
-        System.out.println("Selected ID: "+selectedID);
+        if(this.lastState!=selectedID && !ispop){
+            this.state.push(this.lastState);
+        }
+        this.lastState = selectedID;
+        ItemAdapter id = (ItemAdapter) customBottomBar.getCustom_recycler_view().getAdapter();
         switch (selectedID){
             case ItemSelector.HOME:
                 if(this.homeScreen.isAdded()){
                     ft.show(this.homeScreen);
                 }
                 else{
-                    System.out.println("masuk sini gak sih");
                     ft.add(R.id.mangaking,this.homeScreen);
                 }
                 if(this.mangaInfo.isAdded()){
                     ft.hide(this.mangaInfo);
                 }
+                if(id != null)
+                id.forceChange(0);
                 break;
             case ItemSelector.BOOKMARKS:
                 if(this.homeScreen.isAdded()){
@@ -95,6 +108,8 @@ public class Mangaking extends Fragment implements ItemSelector {
                 if(this.mangaInfo.isAdded()){
                     ft.hide(this.mangaInfo);
                 }
+                if(id != null)
+                id.forceChange(1);
                 break;
             case ItemSelector.LIKES:
                 if(this.homeScreen.isAdded()){
@@ -103,6 +118,8 @@ public class Mangaking extends Fragment implements ItemSelector {
                 if(this.mangaInfo.isAdded()){
                     ft.hide(this.mangaInfo);
                 }
+                if(id != null)
+                id.forceChange(2);
                 break;
             case ItemSelector.INFO:
                 if(this.mangaInfo.isAdded()){
@@ -110,11 +127,12 @@ public class Mangaking extends Fragment implements ItemSelector {
                 }
                 else{
                     ft.add(R.id.mangaking,this.mangaInfo);
-                    System.out.println("HOII");
                 }
                 if(this.homeScreen.isAdded()){
                     ft.hide(this.homeScreen);
                 }
+                if(id != null)
+                id.forceChange(0);
                 break;
         }
         ft.commit();

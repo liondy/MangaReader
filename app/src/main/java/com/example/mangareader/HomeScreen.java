@@ -153,14 +153,11 @@ public class HomeScreen extends Fragment implements AdapterView.OnItemClickListe
                     ArrayList<Chapter> chapterArrayList = new ArrayList<>();
                     for(int i = 0; i < panjang; i++){
                         arr[i] = chapters.getString(i);
-                        //System.out.println("iteeammamtamtmamematmamtmamtamtamtmatm "+arr[i]);
                         String[] chapterInfo = new String[arr[i].split(",").length];
                         for(int j = 0; j < chapterInfo.length; j++){
                             chapterInfo[j] = arr[i].split(",")[j];
-                            //System.out.println("dfkajljfadskjfkdlasjfklasdjfklasdjfkldsjf "+chapterInfo[j]);
                         }
                         Chapter chapter = new Chapter(chapterInfo[0],chapterInfo[2],chapterInfo[3]);
-                        //System.out.println(chapterInfo[0]+" "+chapterInfo[1]+" "+chapterInfo[2]);
                         chapterArrayList.add(chapter);
                     }
                     manga.setAuthor(author);
@@ -168,7 +165,6 @@ public class HomeScreen extends Fragment implements AdapterView.OnItemClickListe
                     manga.setChapter_len(chapterLength);
                     manga.setReleased(released);
                     manga.setChapterList(chapterArrayList);
-                    //System.out.println("CHAPTER LIST "+manga.getChapterList().get(1).getNumber());
                     itemSelector.setManga(manga.getImage(),manga.getTitle(),manga.getReleased(),manga.getRating(),manga.getAuthor(),manga.getCategory(),manga.getChapter_len(),manga.getStatus(),manga.getSummary(),manga.getChapterList());
 
                 } catch (JSONException e) {
@@ -183,7 +179,7 @@ public class HomeScreen extends Fragment implements AdapterView.OnItemClickListe
         });
         RequestQueue requestQueue = Volley.newRequestQueue(this.context);
         requestQueue.add(stringRequest);
-        this.itemSelector.itemSelect(ItemSelector.INFO);
+        this.itemSelector.itemSelect(ItemSelector.INFO,false);
         itemSelector.setManga(manga.getImage(),manga.getTitle(),manga.getReleased(),manga.getRating(),manga.getAuthor(),manga.getCategory(),manga.getChapter_len(),manga.getStatus(),manga.getSummary(), manga.getChapterList());
         this.editSearch.setText("");
     }

@@ -12,14 +12,15 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
     private FragmentManager fragmentManager;
     private SplashScreen splashScreen;
     private Mangaking mangaking;
+    private MainPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        MainPresenter presenter = new MainPresenter(this);
+        this.presenter = new MainPresenter(this);
         this.splashScreen = SplashScreen.createSplashScreen(this);
-        this.mangaking = Mangaking.createMangaApp(this);
+        this.mangaking = Mangaking.createMangaApp(this,this.presenter);
         this.fragmentManager=this.getSupportFragmentManager();
         this.showPage(FragmentListener.SPLASH_SCREEN);
     }
@@ -50,5 +51,15 @@ public class MainActivity extends AppCompatActivity implements FragmentListener 
             }
         }
         ft.commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(this.presenter.stack!=null && !this.presenter.stack.isEmpty()){
+            this.presenter.itemSelector.itemSelect(this.presenter.stack.pop(),true);
+        }
+        else{
+            moveTaskToBack(true);
+        }
     }
 }

@@ -26,7 +26,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.items = items;
         this.itemSelectorInterface = itemSelectorInterface;
         setDefaultOpen(defaultOpenIndex);
-        this.itemSelectorInterface.itemSelect(defaultOpenIndex);
+        this.itemSelectorInterface.itemSelect(defaultOpenIndex,false);
     }
 
     @NonNull
@@ -91,9 +91,15 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 changeCloseData();
                 items.get(position).setOpen(true);
                 notifyDataSetChanged();
-                itemSelectorInterface.itemSelect(itemID);
+                itemSelectorInterface.itemSelect(itemID,false);
             }
         });
+    }
+
+    public void forceChange(final int position){
+        changeCloseData();
+        items.get(position).setOpen(true);
+        notifyDataSetChanged();
     }
 
     //When you select a new item, you close all of them. This way, only one item will always be open.

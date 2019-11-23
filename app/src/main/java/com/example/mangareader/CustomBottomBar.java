@@ -41,6 +41,10 @@ public class CustomBottomBar {
         }
     }
 
+    public RecyclerView getCustom_recycler_view() {
+        return custom_recycler_view;
+    }
+
     //Change methods
     public void changeBackground(String color) {
         custom_bottom_bar_parent.setCardBackgroundColor(Color.parseColor(color));
@@ -79,6 +83,8 @@ public class CustomBottomBar {
         custom_recycler_view.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         custom_recycler_view.setAdapter(simpleAdapter);
     }
+
+
 
     //Apply
     public void apply(int defaultOpenIndex) {
