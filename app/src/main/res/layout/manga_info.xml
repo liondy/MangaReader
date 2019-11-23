@@ -28,7 +28,7 @@
             <LinearLayout
                 android:layout_width="200dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_height="400dp"
+                android:layout_height="300dp"
                 android:layout_weight="0.5">
 
                 <ImageView
@@ -36,6 +36,29 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/backgorund" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:layout_weight="1"
+                    android:id="@+id/btn_bookmark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="75dp"
+                    android:backgroundTint="@color/colorWhite"
+                    android:src="@drawable/ic_bookmarks"/>
+
+                <ImageButton
+                    android:layout_weight="1"
+                    android:id="@+id/btn_likes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="75dp"
+                    android:src="@drawable/ic_likes"
+                    android:backgroundTint="@color/colorWhite"/>
             </LinearLayout>
 
             <LinearLayout

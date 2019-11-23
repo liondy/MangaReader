@@ -144,7 +144,7 @@ public class HomeScreen extends Fragment implements AdapterView.OnItemClickListe
         InputMethodManager imm = (InputMethodManager) this.context.getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         final Manga manga = this.mangaList.get(i);
-        String mangaId = manga.getId();
+        final String mangaId = manga.getId();
         String url = "https://www.mangaeden.com/api/manga/"+mangaId+"/";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -173,7 +173,7 @@ public class HomeScreen extends Fragment implements AdapterView.OnItemClickListe
                     manga.setChapter_len(chapterLength);
                     manga.setReleased(released);
                     manga.setChapterList(chapterArrayList);
-                    itemSelector.setManga(manga.getImage(),manga.getTitle(),manga.getReleased(),manga.getRating(),manga.getAuthor(),manga.getCategory(),manga.getChapter_len(),manga.getStatus(),manga.getSummary(),manga.getChapterList());
+                    itemSelector.setManga(manga);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -188,7 +188,7 @@ public class HomeScreen extends Fragment implements AdapterView.OnItemClickListe
         RequestQueue requestQueue = Volley.newRequestQueue(this.context);
         requestQueue.add(stringRequest);
         this.itemSelector.itemSelect(ItemSelector.INFO,false);
-        itemSelector.setManga(manga.getImage(),manga.getTitle(),manga.getReleased(),manga.getRating(),manga.getAuthor(),manga.getCategory(),manga.getChapter_len(),manga.getStatus(),manga.getSummary(), manga.getChapterList());
+        itemSelector.setManga(manga);
         this.editSearch.setText("");
     }
 }

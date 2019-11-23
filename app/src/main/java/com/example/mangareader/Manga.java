@@ -15,6 +15,8 @@ public class Manga {
     private String chapter_len;
     private String released;
     private ArrayList<Chapter> chapterList;
+    private boolean bookmarked;
+    private boolean liked;
 
     public Manga(String id, String title, String alias, String category, String status, String rating, String image) {
         this.id = id;
@@ -29,6 +31,8 @@ public class Manga {
         this.chapter_len = "";
         this.released = "";
         this.chapterList = new ArrayList();
+        this.bookmarked = false;
+        this.liked = false;
     }
 
     public String getId() {
@@ -128,5 +132,21 @@ public class Manga {
 
     public void setChapterList(ArrayList<Chapter> chapterList) {
         this.chapterList = chapterList;
+    }
+
+    public boolean isBookmarked() {
+        return bookmarked;
+    }
+
+    public void setBookmarked() {
+        this.bookmarked = !this.bookmarked;
+    }
+
+    public boolean isLiked() {
+        return liked;
+    }
+
+    public void like() {
+        this.liked = !this.liked;
     }
 }

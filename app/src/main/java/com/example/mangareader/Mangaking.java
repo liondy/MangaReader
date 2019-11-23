@@ -139,9 +139,9 @@ public class Mangaking extends Fragment implements ItemSelector {
     }
 
     @Override
-    public void setManga(String image, String title, String released, String rank, String authors, String genres, String chapterLength, String status, String summary, ArrayList<Chapter> chapterList) {
+    public void setManga(Manga manga) {
         FragmentTransaction ft = this.fragmentManager.beginTransaction();
-        this.mangaInfo.setText(image,title,released,rank,authors,genres,chapterLength,status,summary,chapterList);
+        this.mangaInfo.setText(manga);
         ft.commit();
     }
 }
