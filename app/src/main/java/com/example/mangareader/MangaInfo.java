@@ -16,7 +16,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-public class MangaInfo extends Fragment {
+public class MangaInfo extends Fragment implements AdapterView.OnItemClickListener {
     private static MangaInfo mangaInfo;
     private ImageView poster;
     private TextView title;
@@ -73,6 +73,13 @@ public class MangaInfo extends Fragment {
         this.status = view.findViewById(R.id.status_des);
         this.summary = view.findViewById(R.id.summary_des);
         listChapter = (NonScrollListView) view.findViewById(R.id.listChapter);
+
+        listChapter.setOnItemClickListener(this);
         return view;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
     }
 }
