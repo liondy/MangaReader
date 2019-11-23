@@ -168,7 +168,7 @@ public class HomeScreen extends Fragment implements AdapterView.OnItemClickListe
                     manga.setChapter_len(chapterLength);
                     manga.setReleased(released);
                     manga.setChapterList(chapterArrayList);
-                    System.out.println("CHAPTER LIST "+manga.getChapterList().get(1).getNumber());
+                    //System.out.println("CHAPTER LIST "+manga.getChapterList().get(1).getNumber());
                     itemSelector.setManga(manga.getImage(),manga.getTitle(),manga.getReleased(),manga.getRating(),manga.getAuthor(),manga.getCategory(),manga.getChapter_len(),manga.getStatus(),manga.getSummary(),manga.getChapterList());
 
                 } catch (JSONException e) {
