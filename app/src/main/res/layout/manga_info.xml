@@ -151,10 +151,11 @@
                 android:layout_weight="0.1"
                 android:textSize="30sp"/>
 
-            <ListView
+            <com.example.mangareader.NonScrollListView
                 android:id="@+id/listChapter"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="0dip"
+                android:layout_weight="1"/>
 
         </LinearLayout>
 

@@ -28,7 +28,7 @@ public class MangaInfo extends Fragment {
     private TextView status;
     private TextView summary;
     private Context context;
-    private ListView listChapter;
+    private NonScrollListView listChapter;
 
     public MangaInfo(){
         //require empty public constructor
@@ -72,7 +72,7 @@ public class MangaInfo extends Fragment {
         this.chapterLength = view.findViewById(R.id.chapter_des);
         this.status = view.findViewById(R.id.status_des);
         this.summary = view.findViewById(R.id.summary_des);
-        listChapter = view.findViewById(R.id.listChapter);
+        listChapter = (NonScrollListView) view.findViewById(R.id.listChapter);
         return view;
     }
 }

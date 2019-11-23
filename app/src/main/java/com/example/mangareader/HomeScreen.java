@@ -145,17 +145,22 @@ public class HomeScreen extends Fragment implements AdapterView.OnItemClickListe
                     String description = obj.getString("description");
                     String author = obj.getString("author");
                     String chapterLength = obj.getString("chapters_len");
+                    int panjang = Integer.parseInt(chapterLength);
+                    //System.out.println("panjgaaaaanangng dari ccchahahpppterrrr "+panjang);
                     String released = obj.getString("released");
                     JSONArray chapters = obj.getJSONArray("chapters");
-                    String[] arr = new String[chapters.length()];
+                    String[] arr = new String[panjang];
                     ArrayList<Chapter> chapterArrayList = new ArrayList<>();
-                    for(int i = 0; i < chapters.length(); i++){
+                    for(int i = 0; i < panjang; i++){
                         arr[i] = chapters.getString(i);
+                        //System.out.println("iteeammamtamtmamematmamtmamtamtamtmatm "+arr[i]);
                         String[] chapterInfo = new String[arr[i].split(",").length];
                         for(int j = 0; j < chapterInfo.length; j++){
                             chapterInfo[j] = arr[i].split(",")[j];
+                            //System.out.println("dfkajljfadskjfkdlasjfklasdjfklasdjfkldsjf "+chapterInfo[j]);
                         }
                         Chapter chapter = new Chapter(chapterInfo[0],chapterInfo[2],chapterInfo[3]);
+                        //System.out.println(chapterInfo[0]+" "+chapterInfo[1]+" "+chapterInfo[2]);
                         chapterArrayList.add(chapter);
                     }
                     manga.setAuthor(author);
