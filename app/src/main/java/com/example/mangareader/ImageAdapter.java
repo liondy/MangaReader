@@ -27,7 +27,7 @@ public class ImageAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return this.chapterPagesList.size();
+        return this.chapterPagesList.size()-this.i;
     }
 
     @Override
@@ -40,7 +40,9 @@ public class ImageAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         ImageView imageView = new ImageView(context);
         String imgUrl = "https://cdn.mangaeden.com/mangasimg/";
-        imgUrl += this.chapterPagesList.get(position+this.i).getImage();
+        if(position+this.i<this.chapterPagesList.size()){
+            imgUrl += this.chapterPagesList.get(position+this.i).getImage();
+        }
         Picasso.get().load(imgUrl).into(imageView);
         container.addView(imageView,0);
         return imageView;
