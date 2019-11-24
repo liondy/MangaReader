@@ -103,6 +103,9 @@ public class Mangaking extends Fragment implements ItemSelector {
                 if(this.mangaInfo.isAdded()){
                     ft.hide(this.mangaInfo);
                 }
+                if(this.mangaPages.isAdded()){
+                    ft.hide(this.mangaPages);
+                }
                 if(id != null){
                     id.forceChange(0);
                 }
@@ -114,6 +117,9 @@ public class Mangaking extends Fragment implements ItemSelector {
                 if(this.mangaInfo.isAdded()){
                     ft.hide(this.mangaInfo);
                 }
+                if(this.mangaPages.isAdded()){
+                    ft.hide(this.mangaPages);
+                }
                 if(id != null){
                     id.forceChange(1);
                 }
@@ -124,6 +130,9 @@ public class Mangaking extends Fragment implements ItemSelector {
                 }
                 if(this.mangaInfo.isAdded()){
                     ft.hide(this.mangaInfo);
+                }
+                if(this.mangaPages.isAdded()){
+                    ft.hide(this.mangaPages);
                 }
                 if(id != null){
                     id.forceChange(2);
@@ -142,9 +151,9 @@ public class Mangaking extends Fragment implements ItemSelector {
                 if(this.mangaInfo.isAdded()){
                     ft.hide(this.mangaInfo);
                 }
-//                if(id != null){
-//                    id.forceChange(4);
-//                }
+                if(id != null){
+                    id.forceChange(0);
+                }
                 break;
             case ItemSelector.INFO:
                 if(this.mangaInfo.isAdded()){
@@ -155,6 +164,9 @@ public class Mangaking extends Fragment implements ItemSelector {
                 }
                 if(this.homeScreen.isAdded()){
                     ft.hide(this.homeScreen);
+                }
+                if(this.mangaPages.isAdded()){
+                    ft.hide(this.mangaPages);
                 }
                 if(id != null){
                     id.forceChange(0);

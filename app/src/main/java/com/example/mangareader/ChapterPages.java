@@ -19,7 +19,14 @@ public class ChapterPages {
     }
 
     public String getImage() {
-        return image;
+        String img = "";
+        for (int i = 0 ; i < this.image.length() ; i++){
+            if(this.image.charAt(i)=='"'){
+                continue;
+            }
+            img+=this.image.charAt(i);
+        }
+        return img;
     }
 
     public void setImage(String image) {

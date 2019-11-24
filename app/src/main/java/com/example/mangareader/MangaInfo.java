@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -30,6 +31,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MangaInfo extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener {
     private static MangaInfo mangaInfo;
@@ -139,6 +141,7 @@ public class MangaInfo extends Fragment implements AdapterView.OnItemClickListen
                         ChapterPages chapterPages = new ChapterPages(pagesImage[0],pagesImage[1]);
                         chapterPagesArrayList.add(chapterPages);
                     }
+                    Collections.reverse(chapterPagesArrayList);
                     itemSelector.setPages(chapterPagesArrayList);
                 } catch (JSONException e) {
                     e.printStackTrace();

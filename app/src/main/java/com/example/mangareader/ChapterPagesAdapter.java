@@ -2,6 +2,8 @@ package com.example.mangareader;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +14,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class ChapterPagesAdapter extends ArrayAdapter<ChapterPages> {
@@ -33,10 +39,10 @@ public class ChapterPagesAdapter extends ArrayAdapter<ChapterPages> {
 
         @SuppressLint("ViewHolder") View listViewItem = inflater.inflate(R.layout.item_pages, null, true);
 
-        ChapterPages chapterPages = chapterPagesList.get(id);
-
         ImageView gambar = listViewItem.findViewById(R.id.iv_pages);
-        Glide.with(context).load("https://cdn.mangaeden.com/mangasimg/"+chapterPages.getImage()).into(gambar);
+        String image =  this.chapterPagesList.get(id).getImage();
+        String url = "https://cdn.mangaeden.com/mangasimg/"+image;
+        Picasso.get().load(url).into(gambar);
         return listViewItem;
     }
 }
