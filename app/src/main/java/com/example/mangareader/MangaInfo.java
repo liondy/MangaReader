@@ -17,12 +17,23 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 public class MangaInfo extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener {
     private static MangaInfo mangaInfo;
+    private ItemSelector itemSelector;
     private Manga manga;
     private ImageView poster;
     private TextView title;
@@ -37,17 +48,16 @@ public class MangaInfo extends Fragment implements AdapterView.OnItemClickListen
     private NonScrollListView listChapter;
     private ImageButton btn_bookmark;
     private ImageButton btn_likes;
-    private boolean bookmark_active;
-    private boolean like_active;
 
     public MangaInfo(){
         //require empty public constructor
     }
 
-    public static MangaInfo createMangaInfo(Context context){
+    public static MangaInfo createMangaInfo(Context context, Mangaking mangaking){
         if(mangaInfo == null){
             mangaInfo = new MangaInfo();
             mangaInfo.context = context;
+            mangaInfo.itemSelector = mangaking;
         }
         return mangaInfo;
     }
@@ -100,9 +110,9 @@ public class MangaInfo extends Fragment implements AdapterView.OnItemClickListen
         this.summary = view.findViewById(R.id.summary_des);
         this.btn_bookmark = view.findViewById(R.id.btn_bookmark);
         this.btn_likes = view.findViewById(R.id.btn_likes);
-        listChapter = (NonScrollListView) view.findViewById(R.id.listChapter);
+        this.listChapter = (NonScrollListView) view.findViewById(R.id.listChapter);
 
-        listChapter.setOnItemClickListener(this);
+        this.listChapter.setOnItemClickListener(this);
         this.btn_bookmark.setOnClickListener(this);
         this.btn_likes.setOnClickListener(this);
         return view;
@@ -110,7 +120,39 @@ public class MangaInfo extends Fragment implements AdapterView.OnItemClickListen
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+        String chapterID = this.manga.getChapterList().get(i).getId();
+        String url = "https://www.mangaeden.com/api/chapter/"+chapterID+"/";
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    JSONArray pages = obj.getJSONArray("images");
+                    String[] arr = new String[pages.length()];
+                    ArrayList<ChapterPages> chapterPagesArrayList = new ArrayList<>();
+                    for(int i = 0; i < arr.length; i++){
+                        arr[i] = pages.getString(i);
+                        String[] pagesImage = new String[arr[i].split(",").length];
+                        for(int j = 0; j < pagesImage.length; j++){
+                            pagesImage[j] = arr[i].split(",")[j];
+                        }
+                        ChapterPages chapterPages = new ChapterPages(pagesImage[0],pagesImage[1]);
+                        chapterPagesArrayList.add(chapterPages);
+                    }
+                    itemSelector.setPages(chapterPagesArrayList);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("error");
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(this.context);
+        requestQueue.add(stringRequest);
+        this.itemSelector.itemSelect(ItemSelector.PAGES,false);
     }
 
     @SuppressLint("ResourceAsColor")

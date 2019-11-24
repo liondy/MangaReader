@@ -37,10 +37,10 @@ public class Chapter {
     public String getId() {
         String id = "";
         for (int i = 0 ; i < this.id.length() ; i++){
-            if(this.id.charAt(i)=='['||this.id.charAt(i)==']'){
+            if(this.id.charAt(i)=='['||this.id.charAt(i)==']'||this.id.charAt(i)=='"'){
                 continue;
             }
-            id+=this.number.charAt(i);
+            id+=this.id.charAt(i);
         }
         return id;
     }

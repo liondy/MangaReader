@@ -22,8 +22,9 @@ public class Mangaking extends Fragment implements ItemSelector {
     private ListView lstManga;
     private ArrayList<Manga> mangaList;
     private HomeScreen homeScreen;
-    private FragmentManager fragmentManager;
     private MangaInfo mangaInfo;
+    private MangaPages mangaPages;
+    private FragmentManager fragmentManager;
     private int lastState;
     private MainPresenter mainPresenter;
     private Stack<Integer> state;
@@ -53,8 +54,10 @@ public class Mangaking extends Fragment implements ItemSelector {
         this.customBottomBar = new CustomBottomBar(this.context,view.findViewById(R.id.customBottomBar),this);
         this.mangaList = new ArrayList<>();
         this.homeScreen = HomeScreen.createHomeScreen(this.context,this.mangaList,this);
-        this.mangaInfo = MangaInfo.createMangaInfo(this.context);
+        this.mangaInfo = MangaInfo.createMangaInfo(this.context,this);
+        this.mangaPages = MangaPages.createMangaPages(this.context);
         this.itemSelect(ItemSelector.INFO,false);
+        this.itemSelect(ItemSelector.PAGES,false);
         this.initItems();
         lastState = ItemSelector.HOME;
         mainPresenter.stack.clear();
@@ -64,7 +67,9 @@ public class Mangaking extends Fragment implements ItemSelector {
         this.customBottomBar.changeDividerColor(getString(R.color.colorBlue));
         this.customBottomBar.hideDivider();
         this.customBottomBar.apply(ItemSelector.HOME);
-        ft.hide(this.mangaInfo).commit();
+        ft.hide(this.mangaInfo);
+        ft.hide(this.mangaPages);
+        ft.commit();
         return view;
     }
 
@@ -98,8 +103,9 @@ public class Mangaking extends Fragment implements ItemSelector {
                 if(this.mangaInfo.isAdded()){
                     ft.hide(this.mangaInfo);
                 }
-                if(id != null)
-                id.forceChange(0);
+                if(id != null){
+                    id.forceChange(0);
+                }
                 break;
             case ItemSelector.BOOKMARKS:
                 if(this.homeScreen.isAdded()){
@@ -108,8 +114,9 @@ public class Mangaking extends Fragment implements ItemSelector {
                 if(this.mangaInfo.isAdded()){
                     ft.hide(this.mangaInfo);
                 }
-                if(id != null)
-                id.forceChange(1);
+                if(id != null){
+                    id.forceChange(1);
+                }
                 break;
             case ItemSelector.LIKES:
                 if(this.homeScreen.isAdded()){
@@ -118,8 +125,26 @@ public class Mangaking extends Fragment implements ItemSelector {
                 if(this.mangaInfo.isAdded()){
                     ft.hide(this.mangaInfo);
                 }
-                if(id != null)
-                id.forceChange(2);
+                if(id != null){
+                    id.forceChange(2);
+                }
+                break;
+            case ItemSelector.PAGES:
+                if(this.mangaPages.isAdded()){
+                    ft.show(this.mangaPages);
+                }
+                else{
+                    ft.add(R.id.mangaking,this.mangaPages);
+                }
+                if(this.homeScreen.isAdded()){
+                    ft.hide(this.homeScreen);
+                }
+                if(this.mangaInfo.isAdded()){
+                    ft.hide(this.mangaInfo);
+                }
+//                if(id != null){
+//                    id.forceChange(4);
+//                }
                 break;
             case ItemSelector.INFO:
                 if(this.mangaInfo.isAdded()){
@@ -131,8 +156,9 @@ public class Mangaking extends Fragment implements ItemSelector {
                 if(this.homeScreen.isAdded()){
                     ft.hide(this.homeScreen);
                 }
-                if(id != null)
-                id.forceChange(0);
+                if(id != null){
+                    id.forceChange(0);
+                }
                 break;
         }
         ft.commit();
@@ -142,6 +168,13 @@ public class Mangaking extends Fragment implements ItemSelector {
     public void setManga(Manga manga) {
         FragmentTransaction ft = this.fragmentManager.beginTransaction();
         this.mangaInfo.setText(manga);
+        ft.commit();
+    }
+
+    @Override
+    public void setPages(ArrayList<ChapterPages> pages) {
+        FragmentTransaction ft = this.fragmentManager.beginTransaction();
+        this.mangaPages.setPages(pages);
         ft.commit();
     }
 }
