@@ -11,6 +11,7 @@ import android.widget.ListView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
 
 import com.github.chrisbanes.photoview.PhotoView;
 import com.squareup.picasso.Picasso;
@@ -52,9 +53,9 @@ public class MangaPages extends Fragment implements AdapterView.OnItemClickListe
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         AlertDialog.Builder zoom = new AlertDialog.Builder(context);
         View v = getLayoutInflater().inflate(R.layout.dialog_custom_layout,null);
-        PhotoView photoView = v.findViewById(R.id.imageView);
-        String imgUrl = "https://cdn.mangaeden.com/mangasimg/"+this.chapterPages.get(i).getImage();
-        Picasso.get().load(imgUrl).into(photoView);
+        ViewPager viewPager = v.findViewById(R.id.imageView);
+        ImageAdapter adapter = new ImageAdapter(chapterPages,context,i);
+        viewPager.setAdapter(adapter);
         zoom.setView(v);
         AlertDialog dialog = zoom.create();
         dialog.show();
