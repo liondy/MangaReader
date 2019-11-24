@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -161,13 +162,18 @@ public class MangaInfo extends Fragment implements AdapterView.OnItemClickListen
     @SuppressLint("ResourceAsColor")
     @Override
     public void onClick(View view) {
+        Toast toast;
+        CharSequence text = "";
+        int duration = Toast.LENGTH_SHORT;
         if(view.getId()==this.btn_bookmark.getId()){
             ColorFilter filter;
             if(this.manga.isBookmarked()){
                 filter = new PorterDuffColorFilter(getResources().getColor(R.color.colorBlack), PorterDuff.Mode.SRC_IN);
+                text = "Remove "+this.manga.getTitle()+" from bookmark list";
             }
             else{
                 filter = new PorterDuffColorFilter(getResources().getColor(R.color.colorItem2Tint), PorterDuff.Mode.SRC_IN);
+                text = "Add "+this.manga.getTitle()+" to bookmark list";
             }
             this.manga.setBookmarked();
             this.btn_bookmark.setColorFilter(filter);
@@ -176,12 +182,16 @@ public class MangaInfo extends Fragment implements AdapterView.OnItemClickListen
             ColorFilter filter;
             if(this.manga.isLiked()){
                 filter = new PorterDuffColorFilter(getResources().getColor(R.color.colorBlack), PorterDuff.Mode.SRC_IN);
+                text = "Unlike "+this.manga.getTitle();
             }
             else{
                 filter = new PorterDuffColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_IN);
+                text = "Thank you for liking "+this.manga.getTitle();
             }
             this.manga.like();
             this.btn_likes.setColorFilter(filter);
         }
+        toast = Toast.makeText(context,text,duration);
+        toast.show();
     }
 }
