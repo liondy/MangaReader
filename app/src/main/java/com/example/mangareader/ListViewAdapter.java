@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class ListViewAdapter extends ArrayAdapter<Manga> {
+public class ListViewAdapter extends BaseAdapter {
 
     private ArrayList<Manga> mangaList;
     private ArrayList<Manga> arraylist;
@@ -23,7 +24,6 @@ public class ListViewAdapter extends ArrayAdapter<Manga> {
     private Context context;
 
     public ListViewAdapter(ArrayList<Manga> mangaList, Context context) {
-        super(context, R.layout.home_screen, mangaList);
         this.arraylist = new ArrayList<>();
         this.mangaList = mangaList;
         this.arraylist.addAll(mangaList);
@@ -31,35 +31,64 @@ public class ListViewAdapter extends ArrayAdapter<Manga> {
     }
 
     @Override
-    public View getView(final int id, View convertView, ViewGroup parent) {
+    public int getCount() {
+        return this.mangaList.size();
+    }
 
-        LayoutInflater inflater = LayoutInflater.from(context);
+    @Override
+    public Object getItem(int i) {
+        return this.mangaList.get(i);
+    }
 
-        @SuppressLint("ViewHolder") View listViewItem = inflater.inflate(R.layout.list_manga, null, true);
+    @Override
+    public long getItemId(int i) {
+        return 0;
+    }
 
-        TextView textViewTitle = listViewItem.findViewById(R.id.textViewName);
-        TextView textViewAlias = listViewItem.findViewById(R.id.textViewAlias);
-        TextView textViewCategory = listViewItem.findViewById(R.id.textViewCategory);
-        TextView textViewStatus = listViewItem.findViewById(R.id.textViewStatus);
-        TextView textViewRating = listViewItem.findViewById(R.id.textViewHits);
-        ImageView imgView = listViewItem.findViewById(R.id.Poster);
+    @Override
+    public View getView(int i, View convertView, ViewGroup parent) {
+        Manga mangaItem = mangaList.get(i);
+        if(convertView==null){
+            convertView = LayoutInflater.from(context).inflate(R.layout.list_manga,parent,false);
+            TextView textViewTitle = convertView.findViewById(R.id.textViewName);
+            TextView textViewAlias = convertView.findViewById(R.id.textViewAlias);
+            TextView textViewCategory = convertView.findViewById(R.id.textViewCategory);
+            TextView textViewStatus = convertView.findViewById(R.id.textViewStatus);
+            TextView textViewRating = convertView.findViewById(R.id.textViewHits);
+            ImageView imgView = convertView.findViewById(R.id.Poster);
 
+            textViewTitle.setText(mangaItem.getTitle()+"");
+            textViewAlias.setText(mangaItem.getAlias());
+            textViewCategory.setText(mangaItem.getCategory());
+            textViewStatus.setText(mangaItem.getStatus());
+            textViewRating.setText(mangaItem.getRating());
 
-        Manga mangaItem = mangaList.get(id);
+            if(mangaItem.getImage().equals("null")){
+                Glide.with(context).load(R.drawable.placeholder).into(imgView);
+            }
+            else{
+                Glide.with(context).load("https://cdn.mangaeden.com/mangasimg/200x/"+mangaItem.getImage()).into(imgView);
+            }
 
-        textViewTitle.setText(mangaItem.getTitle());
-        textViewAlias.setText(mangaItem.getAlias());
-        textViewCategory.setText(mangaItem.getCategory());
-        textViewStatus.setText(mangaItem.getStatus());
-        textViewRating.setText(mangaItem.getRating());
-
-        if(mangaItem.getImage().equals("null")){
-            Glide.with(context).load(R.drawable.placeholder).into(imgView);
+            ViewHolder vh = new ViewHolder(textViewTitle,textViewAlias,textViewCategory,textViewStatus,textViewRating,imgView);
+            convertView.setTag(vh);
         }
         else{
-            Glide.with(context).load("https://cdn.mangaeden.com/mangasimg/200x/"+mangaItem.getImage()).into(imgView);
+            ViewHolder vh = (ViewHolder) convertView.getTag();
+            vh.title.setText(mangaItem.getTitle());
+            vh.alias.setText(mangaItem.getAlias());
+            vh.category.setText(mangaItem.getCategory());
+            vh.status.setText(mangaItem.getStatus());
+            vh.rating.setText(mangaItem.getRating());
+
+            if(mangaItem.getImage().equals("null")){
+                Glide.with(context).load(R.drawable.placeholder).into(vh.poster);
+            }
+            else{
+                Glide.with(context).load("https://cdn.mangaeden.com/mangasimg/200x/"+mangaItem.getImage()).into(vh.poster);
+            }
         }
-        return listViewItem;
+        return convertView;
     }
 
     public void filter(String charText) {
@@ -76,5 +105,23 @@ public class ListViewAdapter extends ArrayAdapter<Manga> {
             }
         }
         notifyDataSetChanged();
+    }
+
+    private class ViewHolder{
+        protected TextView title;
+        protected TextView alias;
+        protected TextView category;
+        protected TextView status;
+        protected TextView rating;
+        protected ImageView poster;
+
+        public ViewHolder(TextView title, TextView alias, TextView category, TextView status, TextView rating, ImageView poster) {
+            this.title = title;
+            this.alias = alias;
+            this.category = category;
+            this.status = status;
+            this.rating = rating;
+            this.poster = poster;
+        }
     }
 }
