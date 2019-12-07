@@ -12,4 +12,8 @@ public interface ItemSelector {
     void itemSelect(int selectedID,boolean ispop);
     void setManga(Manga manga);
     void setPages(ArrayList<ChapterPages> pages);
+    void loadInfo();
+    void finishInfo();
+    void loadPages();
+    void finishPages();
 }

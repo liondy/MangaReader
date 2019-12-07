@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,6 +50,7 @@ public class MangaInfo extends Fragment implements AdapterView.OnItemClickListen
     private NonScrollListView listChapter;
     private ImageButton btn_bookmark;
     private ImageButton btn_likes;
+    public ProgressBar progressBar;
 
     public MangaInfo(){
         //require empty public constructor
@@ -63,6 +63,14 @@ public class MangaInfo extends Fragment implements AdapterView.OnItemClickListen
             mangaInfo.itemSelector = mangaking;
         }
         return mangaInfo;
+    }
+
+    public void loading(){
+        this.progressBar.setVisibility(View.VISIBLE);
+    }
+
+    public void finishLoading(){
+        this.progressBar.setVisibility(View.GONE);
     }
 
     public void setText(Manga manga){
@@ -114,6 +122,7 @@ public class MangaInfo extends Fragment implements AdapterView.OnItemClickListen
         this.btn_bookmark = view.findViewById(R.id.btn_bookmark);
         this.btn_likes = view.findViewById(R.id.btn_likes);
         this.listChapter = (NonScrollListView) view.findViewById(R.id.listChapter);
+        this.progressBar = view.findViewById(R.id.progressBar2);
 
         this.listChapter.setOnItemClickListener(this);
         this.btn_bookmark.setOnClickListener(this);
@@ -156,7 +165,14 @@ public class MangaInfo extends Fragment implements AdapterView.OnItemClickListen
         });
         RequestQueue requestQueue = Volley.newRequestQueue(this.context);
         requestQueue.add(stringRequest);
+        requestQueue.addRequestFinishedListener(new RequestQueue.RequestFinishedListener<Object>() {
+            @Override
+            public void onRequestFinished(Request<Object> request) {
+                itemSelector.finishPages();
+            }
+        });
         this.itemSelector.itemSelect(ItemSelector.PAGES,false);
+        this.itemSelector.loadPages();
     }
 
     @SuppressLint("ResourceAsColor")

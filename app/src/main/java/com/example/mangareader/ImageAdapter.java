@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
@@ -19,6 +20,7 @@ public class ImageAdapter extends PagerAdapter {
     private LayoutInflater layoutInflater;
     private Context context;
     private ArrayList<ChapterPages> chapterPagesList;
+    private ProgressBar progressBar;
     private int i;
 
     public ImageAdapter(ArrayList<ChapterPages> chapterPagesList, Context context, int i){
@@ -43,12 +45,14 @@ public class ImageAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         View itemView = layoutInflater.inflate(R.layout.pager_item,container,false);
         PhotoView photoView = (PhotoView) itemView.findViewById(R.id.image);
+        this.progressBar = itemView.findViewById(R.id.progressBar4);
         String imgUrl = "https://cdn.mangaeden.com/mangasimg/";
         if(position+this.i<this.chapterPagesList.size()){
             imgUrl += this.chapterPagesList.get(position+this.i).getImage();
         }
         Picasso.get().load(imgUrl).into(photoView);
         container.addView(itemView);
+        this.progressBar.setVisibility(View.GONE);
         return itemView;
     }
 

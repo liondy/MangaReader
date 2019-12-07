@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
@@ -22,6 +23,7 @@ public class MangaPages extends Fragment implements AdapterView.OnItemClickListe
     public static MangaPages mangaPages;
     private Context context;
     private ListView pages;
+    private ProgressBar progressBar;
     private ArrayList<ChapterPages> chapterPages;
 
     public MangaPages(){
@@ -39,6 +41,7 @@ public class MangaPages extends Fragment implements AdapterView.OnItemClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.chapter_pages,container,false);
         this.pages = view.findViewById(R.id.list_pages);
+        this.progressBar = view.findViewById(R.id.progressBar3);
         this.pages.setOnItemClickListener(this);
         return view;
     }
@@ -47,6 +50,14 @@ public class MangaPages extends Fragment implements AdapterView.OnItemClickListe
         this.chapterPages = pages;
         ChapterPagesAdapter adapter = new ChapterPagesAdapter(this.chapterPages,context);
         this.pages.setAdapter(adapter);
+    }
+
+    public void loading(){
+        this.progressBar.setVisibility(View.VISIBLE);
+    }
+
+    public void finishLoading(){
+        this.progressBar.setVisibility(View.GONE);
     }
 
     @Override

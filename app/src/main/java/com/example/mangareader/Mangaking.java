@@ -184,6 +184,34 @@ public class Mangaking extends Fragment implements ItemSelector {
     }
 
     @Override
+    public void loadInfo() {
+        FragmentTransaction ft = this.fragmentManager.beginTransaction();
+        this.mangaInfo.loading();
+        ft.commit();
+    }
+
+    @Override
+    public void finishInfo() {
+        FragmentTransaction ft = this.fragmentManager.beginTransaction();
+        this.mangaInfo.finishLoading();
+        ft.commit();
+    }
+
+    @Override
+    public void loadPages() {
+        FragmentTransaction ft = this.fragmentManager.beginTransaction();
+        this.mangaPages.loading();
+        ft.commit();
+    }
+
+    @Override
+    public void finishPages() {
+        FragmentTransaction ft = this.fragmentManager.beginTransaction();
+        this.mangaPages.finishLoading();
+        ft.commit();
+    }
+
+    @Override
     public void setPages(ArrayList<ChapterPages> pages) {
         FragmentTransaction ft = this.fragmentManager.beginTransaction();
         this.mangaPages.setPages(pages);

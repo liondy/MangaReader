@@ -208,8 +208,14 @@ public class HomeScreen extends Fragment implements AdapterView.OnItemClickListe
         });
         RequestQueue requestQueue = Volley.newRequestQueue(this.context);
         requestQueue.add(stringRequest);
+        requestQueue.addRequestFinishedListener(new RequestQueue.RequestFinishedListener<Object>() {
+            @Override
+            public void onRequestFinished(Request<Object> request) {
+                itemSelector.finishInfo();
+            }
+        });
+        this.itemSelector.loadInfo();
         this.itemSelector.itemSelect(ItemSelector.INFO,false);
-        itemSelector.setManga(manga);
         this.editSearch.setText("");
     }
 }
