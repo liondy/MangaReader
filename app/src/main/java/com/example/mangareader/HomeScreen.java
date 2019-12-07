@@ -164,7 +164,12 @@ public class HomeScreen extends Fragment implements AdapterView.OnItemClickListe
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         InputMethodManager imm = (InputMethodManager) this.context.getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        final Manga manga = this.mangaList.get(i);
+        loadMangaInfo(i);
+        this.itemSelector.loadInfo();
+    }
+
+    public void loadMangaInfo(final int position){
+        final Manga manga = this.mangaList.get(position);
         final String mangaId = manga.getId();
         String url = "https://www.mangaeden.com/api/manga/"+mangaId+"/";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -203,7 +208,25 @@ public class HomeScreen extends Fragment implements AdapterView.OnItemClickListe
         },new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println("error");
+                final AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+                alertDialog.setTitle("No Internet Found");
+                alertDialog.setMessage("Uh-oh! It seems that you're in offline mode! Try to check your Internet Connection!");
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "RECONNECT", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                        itemSelector.itemSelect(ItemSelector.HOME,true);
+                    }
+                });
+                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "CLOSE APP", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                        System.exit(0);
+                    }
+                });
+                alertDialog.show();
+                Toast.makeText(context,"No Internet Found",Toast.LENGTH_LONG).show();
             }
         });
         RequestQueue requestQueue = Volley.newRequestQueue(this.context);
@@ -212,10 +235,9 @@ public class HomeScreen extends Fragment implements AdapterView.OnItemClickListe
             @Override
             public void onRequestFinished(Request<Object> request) {
                 itemSelector.finishInfo();
+                editSearch.setText("");
             }
         });
-        this.itemSelector.loadInfo();
         this.itemSelector.itemSelect(ItemSelector.INFO,false);
-        this.editSearch.setText("");
     }
 }

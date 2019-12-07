@@ -2,6 +2,7 @@ package com.example.mangareader;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
@@ -16,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.Request;
@@ -132,46 +134,8 @@ public class MangaInfo extends Fragment implements AdapterView.OnItemClickListen
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        String chapterID = this.manga.getChapterList().get(i).getId();
-        String url = "https://www.mangaeden.com/api/chapter/"+chapterID+"/";
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject obj = new JSONObject(response);
-                    JSONArray pages = obj.getJSONArray("images");
-                    String[] arr = new String[pages.length()];
-                    ArrayList<ChapterPages> chapterPagesArrayList = new ArrayList<>();
-                    for(int i = 0; i < arr.length; i++){
-                        arr[i] = pages.getString(i);
-                        String[] pagesImage = new String[arr[i].split(",").length];
-                        for(int j = 0; j < pagesImage.length; j++){
-                            pagesImage[j] = arr[i].split(",")[j];
-                        }
-                        ChapterPages chapterPages = new ChapterPages(pagesImage[0],pagesImage[1]);
-                        chapterPagesArrayList.add(chapterPages);
-                    }
-                    Collections.reverse(chapterPagesArrayList);
-                    itemSelector.setPages(chapterPagesArrayList);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        },new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                System.out.println("error");
-            }
-        });
-        RequestQueue requestQueue = Volley.newRequestQueue(this.context);
-        requestQueue.add(stringRequest);
-        requestQueue.addRequestFinishedListener(new RequestQueue.RequestFinishedListener<Object>() {
-            @Override
-            public void onRequestFinished(Request<Object> request) {
-                itemSelector.finishPages();
-            }
-        });
         this.itemSelector.itemSelect(ItemSelector.PAGES,false);
+        this.loadChapter(i);
         this.itemSelector.loadPages();
     }
 
@@ -209,5 +173,66 @@ public class MangaInfo extends Fragment implements AdapterView.OnItemClickListen
         }
         toast = Toast.makeText(context,text,duration);
         toast.show();
+    }
+
+    public void loadChapter(final int position){
+        String chapterID = this.manga.getChapterList().get(position).getId();
+        String url = "https://www.mangaeden.com/api/chapter/"+chapterID+"/";
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    JSONArray pages = obj.getJSONArray("images");
+                    String[] arr = new String[pages.length()];
+                    ArrayList<ChapterPages> chapterPagesArrayList = new ArrayList<>();
+                    for(int i = 0; i < arr.length; i++){
+                        arr[i] = pages.getString(i);
+                        String[] pagesImage = new String[arr[i].split(",").length];
+                        for(int j = 0; j < pagesImage.length; j++){
+                            pagesImage[j] = arr[i].split(",")[j];
+                        }
+                        ChapterPages chapterPages = new ChapterPages(pagesImage[0],pagesImage[1]);
+                        chapterPagesArrayList.add(chapterPages);
+                    }
+                    Collections.reverse(chapterPagesArrayList);
+                    itemSelector.setPages(chapterPagesArrayList);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                final AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+                alertDialog.setTitle("No Internet Found");
+                alertDialog.setMessage("Uh-oh! It seems that you're in offline mode! Try to check your Internet Connection!");
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "RECONNECT", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                        loadChapter(position);
+                        progressBar.setVisibility(View.VISIBLE);
+                    }
+                });
+                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "CLOSE APP", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                        System.exit(0);
+                    }
+                });
+                alertDialog.show();
+                Toast.makeText(context,"No Internet Found",Toast.LENGTH_LONG).show();
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(this.context);
+        requestQueue.add(stringRequest);
+        requestQueue.addRequestFinishedListener(new RequestQueue.RequestFinishedListener<Object>() {
+            @Override
+            public void onRequestFinished(Request<Object> request) {
+                itemSelector.finishPages();
+            }
+        });
     }
 }
